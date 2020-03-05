@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-const PRIMARY_COLOR = Color(0xff0277bd); //"#0277bd"
-const PRIMARY_COLOR_LIGHT = Color(0xff58a5f0); //"#58a5f0"
-const PRIMARY_COLOR_DARK = Color(0xff004c8c); //"#004c8c"
-const PRIMARY_ICON_COLOR = Color(0xffffffff); //"#ffffff"
+const primaryColor = Color(0xffF4BC2B); // #F4BC2B
+const primaryLightColor = Color(0xffFFEE61); // #FFEE61
+const primaryDarkColor = Color(0xffBD8C00); // #BD8C00
+const primaryIconColor = Color(0xff000000); // #000000
 
-const SECONDARY_COLOR = Color(0xffffee58); //"#ffee58"
-const SECONDARY_COLOR_LIGHT = Color(0xffffff8b); //"#ffff8b"
-const SECONDARY_COLOR_DARK = Color(0xffc9bc1f); //"#c9bc1f"
-const SECONDARY_ICON_COLOR = Color(0xff000000); //"#000000"
+const secondaryColor = Color(0xff0066FF); // #0066FF
+const secondaryLightColor = Color(0xff7D55FF); // #7D55FF
+const secondaryDarkColor = Color(0xff00009F); // #00009F
+const secondaryIconColor = Color(0xffFFFFFF); // #FFFFFF
 
-const BACKGROUND_COLOR = Color(0xff85AFD9); //"#85AFD9"
+const backgroundColor = Color(0xffFFF1CD); // #FFF1CD
 
-const ERROR_COLOR = Color(0xffdd2c00); //"#dd2c00"
+const errorColor = Color(0xffD50000); // #D50000
