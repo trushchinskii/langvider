@@ -6,5 +6,5 @@ abstract class Str {
   }
 
   // Splash Screen
-  String get splashScreenTitle => "Главный экран";
+  String get splashScreenTitle => "Langvider";
 }

@@ -4,6 +4,7 @@ import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
 import 'package:langvider/src/ui/screens/main/main_screen_route.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
+import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
 
 class App extends StatefulWidget {
   static final globalKey = GlobalKey<NavigatorState>();
@@ -77,10 +78,11 @@ class _AppState extends State<App> {
   }
 
   Route _onGenerateFirstRoute(RouteSettings settings) {
-    if (settings.name == MainScreenRoute.name) {
-      return MainScreenRoute();
-    } else {
-      throw Exception("Unknown route name ${settings.name}");
+    switch (settings.name) {
+      case SplashScreenRoute.name:
+        return SplashScreenRoute();
+      default:
+        throw Exception("Unknown route name ${settings.name}");
     }
   }
 }
