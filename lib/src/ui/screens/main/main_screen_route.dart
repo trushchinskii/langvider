@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/screens/main/main_screen.dart';
 import 'package:langvider/src/ui/screens/main/main_wm.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,9 @@ class _MainScreenProvider extends Provider<MainScreenWm> {
   _MainScreenProvider({
     @required Widget child,
   }) : super(
-          create: (_) => MainScreenWm(),
+          create: (context) => MainScreenWm(
+            WmDependencies(context),
+          ),
           child: child,
         );
 }

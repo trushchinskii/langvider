@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:langvider/src/ui/base/navogator/global_navigator.dart';
+import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
 import 'package:langvider/src/ui/utils/colors.dart';

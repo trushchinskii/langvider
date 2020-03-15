@@ -7,4 +7,7 @@ abstract class Str {
 
   // Splash Screen
   String get splashScreenTitle => "Langvider";
+
+  // Errors
+  String get authError => "Authorization error";
 }
