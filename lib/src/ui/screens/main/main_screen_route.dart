@@ -4,18 +4,16 @@ import 'package:langvider/src/ui/screens/main/main_wm.dart';
 import 'package:provider/provider.dart';
 
 class MainScreenRoute extends MaterialPageRoute {
-  static const name = "/";
-
   MainScreenRoute()
       : super(
-          builder: (context) => _SplashScreenProvider(
+          builder: (context) => _MainScreenProvider(
             child: MainScreen(),
           ),
         );
 }
 
-class _SplashScreenProvider extends Provider<MainScreenWm> {
-  _SplashScreenProvider({
+class _MainScreenProvider extends Provider<MainScreenWm> {
+  _MainScreenProvider({
     @required Widget child,
   }) : super(
           create: (_) => MainScreenWm(),

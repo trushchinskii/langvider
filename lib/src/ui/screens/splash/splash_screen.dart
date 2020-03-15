@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:langvider/src/ui/base/base_widget.dart';
+import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/screens/splash/splash_wm.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 

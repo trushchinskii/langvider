@@ -1,4 +1,4 @@
-import 'package:langvider/src/ui/base/base_widget_model.dart';
+import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 
 class MainScreenWm extends BaseWidgetModel {
   static const name = "/";

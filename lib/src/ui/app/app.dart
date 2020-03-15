@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:langvider/src/ui/base/navogator/global_navigator.dart';
 import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
-import 'package:langvider/src/ui/screens/main/main_screen_route.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
+import 'package:langvider/src/ui/utils/provider_utils.dart';
 
 class App extends StatefulWidget {
-  static final globalKey = GlobalKey<NavigatorState>();
-
   @override
   _AppState createState() => _AppState();
 }
@@ -17,7 +16,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: App.globalKey,
+      navigatorKey: ProviderUtils.provide<GlobalNavigator>(context).globalKey,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -25,7 +24,7 @@ class _AppState extends State<App> {
       ],
       supportedLocales: LocalizationConfig.supportedLocales,
       theme: _buildAppTheme(),
-      initialRoute: MainScreenRoute.name,
+      initialRoute: SplashScreenRoute.name,
       onGenerateRoute: (RouteSettings settings) {
         return _onGenerateFirstRoute(settings);
       },

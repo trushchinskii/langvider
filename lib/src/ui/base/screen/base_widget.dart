@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:langvider/src/ui/base/base_widget_model.dart';
+import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/localozation/str/str.dart';
 import 'package:provider/provider.dart';
 

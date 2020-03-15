@@ -13,7 +13,7 @@ class AuthInteractor {
   /// Return [User] if user login and null if doesn't
   Future<User> signIn() => _authRepository.signIn();
 
-  Future<bool> get isUserAuthorized => _authRepository.isUserAuthorized;
+  Future<bool> get isUserAuth => _authRepository.isUserAuthorized;
 
   Future<void> signOut() async => _authRepository.signOut();
 }
