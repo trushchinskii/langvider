@@ -4,6 +4,7 @@ const primaryColor = Color(0xffF4BC2B); // #F4BC2B
 const primaryLightColor = Color(0xffFFEE61); // #FFEE61
 const primaryDarkColor = Color(0xffBD8C00); // #BD8C00
 const primaryIconColor = Color(0xff000000); // #000000
+const onPrimaryColor = Colors.black;
 
 const secondaryColor = Color(0xff0066FF); // #0066FF
 const secondaryLightColor = Color(0xff7D55FF); // #7D55FF

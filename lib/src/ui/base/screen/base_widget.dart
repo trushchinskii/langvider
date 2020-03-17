@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/localozation/str/str.dart';
-import 'package:langvider/src/ui/utils/provider_utils.dart';
+import 'package:provider/provider.dart';
 
 /// Base class for functional widget
 ///
@@ -29,6 +29,14 @@ abstract class BaseWidgetState<W extends BaseWidget, WM extends BaseWidgetModel>
     WidgetsBinding.instance.addPostFrameCallback((_) => onAttached());
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    wm = Provider.of<WM>(context);
+    str = Str.of(context);
+  }
+
   /// Executes after attached to tree
   void onAttached() {
     wm.onAttached();
@@ -36,9 +44,6 @@ abstract class BaseWidgetState<W extends BaseWidget, WM extends BaseWidgetModel>
 
   @override
   Widget build(BuildContext context) {
-    wm = ProviderUtils.provide<WM>(context);
-    str = Str.of(context);
-
     return buildWidget(context);
   }
 

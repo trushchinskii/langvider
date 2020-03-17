@@ -8,6 +8,10 @@ abstract class Str {
   // Splash Screen
   String get splashScreenTitle => "Langvider";
 
+  // Login Screen
+  String get authTitle => "Войти:";
+  String get googleButtonText => "GOOGLE";
+
   // Errors
   String get authError => "Authorization error";
 }
