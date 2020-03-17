@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "787912007535",
+    "firebase_url": "https://langvider-d54cf.firebaseio.com",
+    "project_id": "langvider-d54cf",
+    "storage_bucket": "langvider-d54cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787912007535:android:e9706dfd4d2ba3fdd9129a",
+        "android_client_info": {
+          "package_name": "com.trushchinskii.langvider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787912007535-fojar25ehc9krlnsjpi09994c1a5vc94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trushchinskii.langvider",
+            "certificate_hash": "7d69df7ad84d6f989e7e32cb1f5d37609925a09d"
+          }
+        },
+        {
+          "client_id": "787912007535-bkltnd2fvgaaf57cq76423ce6hi8ece2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCJNut57usFzVnJVTXBec5LHXITzJ6x0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787912007535-bkltnd2fvgaaf57cq76423ce6hi8ece2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

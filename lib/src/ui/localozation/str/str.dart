@@ -6,5 +6,8 @@ abstract class Str {
   }
 
   // Splash Screen
-  String get splashScreenTitle => "Главный экран";
+  String get splashScreenTitle => "Langvider";
+
+  // Errors
+  String get authError => "Authorization error";
 }

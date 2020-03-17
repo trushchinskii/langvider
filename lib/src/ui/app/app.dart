@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
-import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
+import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
+import 'package:langvider/src/ui/utils/provider_utils.dart';
 
 class App extends StatefulWidget {
-  static final globalKey = GlobalKey<NavigatorState>();
-
   @override
   _AppState createState() => _AppState();
 }
@@ -16,7 +16,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: App.globalKey,
+      navigatorKey: ProviderUtils.provide<GlobalNavigator>(context).globalKey,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -34,22 +34,23 @@ class _AppState extends State<App> {
   ThemeData _buildAppTheme() {
     final ThemeData base = ThemeData.light();
     return base.copyWith(
-        primaryColor: PRIMARY_COLOR,
-        primaryColorLight: PRIMARY_COLOR_LIGHT,
-        primaryColorDark: PRIMARY_COLOR_DARK,
-        accentColor: SECONDARY_COLOR,
-        errorColor: ERROR_COLOR,
+        primaryColor: primaryColor,
+        primaryColorLight: primaryLightColor,
+        primaryColorDark: primaryDarkColor,
+        accentColor: secondaryColor,
+        errorColor: errorColor,
+        bottomAppBarColor: primaryColor,
         floatingActionButtonTheme: base.floatingActionButtonTheme.copyWith(
-          backgroundColor: SECONDARY_COLOR,
+          backgroundColor: secondaryColor,
         ),
-        scaffoldBackgroundColor: BACKGROUND_COLOR,
-        accentIconTheme: base.iconTheme.copyWith(color: SECONDARY_ICON_COLOR),
-        primaryIconTheme: base.iconTheme.copyWith(color: PRIMARY_ICON_COLOR),
+        scaffoldBackgroundColor: backgroundColor,
+        accentIconTheme: base.iconTheme.copyWith(color: secondaryIconColor),
+        primaryIconTheme: base.iconTheme.copyWith(color: primaryIconColor),
         textTheme: _buildShrineTextTheme(base.textTheme),
         primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
         accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-        iconTheme: base.iconTheme.copyWith(color: PRIMARY_ICON_COLOR),
-        appBarTheme: base.appBarTheme.copyWith(color: PRIMARY_COLOR));
+        iconTheme: base.iconTheme.copyWith(color: primaryIconColor),
+        appBarTheme: base.appBarTheme.copyWith(color: primaryColor));
   }
 
   TextTheme _buildShrineTextTheme(TextTheme base) {
@@ -76,10 +77,11 @@ class _AppState extends State<App> {
   }
 
   Route _onGenerateFirstRoute(RouteSettings settings) {
-    if (settings.name == SplashScreenRoute.name) {
-      return SplashScreenRoute();
-    } else {
-      throw Exception("Unknown route name ${settings.name}");
+    switch (settings.name) {
+      case SplashScreenRoute.name:
+        return SplashScreenRoute();
+      default:
+        throw Exception("Unknown route name ${settings.name}");
     }
   }
 }
