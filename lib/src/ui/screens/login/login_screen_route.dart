@@ -20,7 +20,7 @@ class _LoginScreenProvider extends Provider<LoginScreenWm> {
     @required Widget child,
   }) : super(
           create: (context) => LoginScreenWm(
-            WmDependencies(context),
+            WmDependencies(context, GlobalKey()),
             ProviderUtils.provide<AuthInteractor>(context),
           ),
           child: child,

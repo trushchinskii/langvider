@@ -11,7 +11,7 @@ class AuthInteractor {
   /// Sign in in google account
   ///
   /// Return [User] if user login and null if doesn't
-  Future<User> signIn() => _authRepository.signIn();
+  Future<User> login() => _authRepository.login();
 
   Future<bool> get isUserAuth => _authRepository.isUserAuthorized;
 

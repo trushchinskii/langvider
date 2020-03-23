@@ -15,7 +15,7 @@ class AuthRepository {
   /// Sign in in google account
   ///
   /// Return [User] if user login and null if doesn't
-  Future<User> signIn() async {
+  Future<User> login() async {
     GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
     if (googleAccount == null) return null;
 
@@ -26,7 +26,7 @@ class AuthRepository {
       idToken: googleAuthentication.idToken,
     );
     AuthResult authResult = await _auth.signInWithCredential(credential);
-   
+
     if (authResult.user != null) {
       return User(authResult.user);
     } else {

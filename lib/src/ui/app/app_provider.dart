@@ -4,7 +4,6 @@ import 'package:langvider/src/interactors/auth/repository/auth_repository.dart';
 import 'package:langvider/src/interactors/common/http/http.dart';
 import 'package:langvider/src/interactors/common/http/implementation/dio_http.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 /// This provider creates dependencies for app's scope
@@ -18,9 +17,6 @@ class AppProvider extends MultiProvider {
             ),
             Provider<Http>(
               create: (_) => DioHttp(),
-            ),
-            Provider<Logger>(
-              create: (_) => Logger(),
             ),
             Provider<AuthInteractor>(
               create: (_) => AuthInteractor(

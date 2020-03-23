@@ -13,6 +13,7 @@ class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
+      key: wm.scaffoldKey,
       body: Column(
         children: [
           SizedBox(
@@ -26,7 +27,7 @@ class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
             child: SizedBox(),
           ),
           Text(
-            str.authTitle,
+            str.loginTitle,
             style: Theme.of(context).textTheme.title,
           ),
           SizedBox(height: 24),

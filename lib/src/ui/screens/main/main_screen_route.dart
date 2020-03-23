@@ -18,7 +18,7 @@ class _MainScreenProvider extends Provider<MainScreenWm> {
     @required Widget child,
   }) : super(
           create: (context) => MainScreenWm(
-            WmDependencies(context),
+            WmDependencies(context, GlobalKey()),
           ),
           child: child,
         );

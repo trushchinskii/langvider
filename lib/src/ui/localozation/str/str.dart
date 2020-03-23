@@ -9,9 +9,10 @@ abstract class Str {
   String get splashScreenTitle => "Langvider";
 
   // Login Screen
-  String get authTitle => "Войти:";
+  String get loginTitle => "Войти:";
   String get googleButtonText => "GOOGLE";
 
   // Errors
-  String get authError => "Authorization error";
+  String get loginError =>
+      "Произошла ошибка авторизации. Проверьте соединение с интернетом и повторите снова";
 }
