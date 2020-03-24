@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langvider/src/domain/user.dart';
+import 'package:langvider/src/interactors/common/base/base_repository.dart';
 
-class AuthRepository {
+class AuthRepository extends BaseRepository {
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
@@ -16,31 +17,45 @@ class AuthRepository {
   ///
   /// Return [User] if user login and null if doesn't
   Future<User> login() async {
-    GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
-    if (googleAccount == null) return null;
+    User user;
 
-    GoogleSignInAuthentication googleAuthentication =
-        await googleAccount.authentication;
-    AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuthentication.accessToken,
-      idToken: googleAuthentication.idToken,
-    );
-    AuthResult authResult = await _auth.signInWithCredential(credential);
+    try {
+      GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
+      if (googleAccount == null) return null;
 
-    if (authResult.user != null) {
-      return User(authResult.user);
-    } else {
-      return null;
+      GoogleSignInAuthentication googleAuthentication =
+          await googleAccount.authentication;
+      AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuthentication.accessToken,
+        idToken: googleAuthentication.idToken,
+      );
+      AuthResult authResult = await _auth.signInWithCredential(credential);
+
+      if (authResult.user != null) user = User(authResult.user);
+    } catch (e) {
+      handleCommonException(e);
     }
+
+    return user;
   }
 
-  Future<bool> get isUserAuthorized async {
-    FirebaseUser firebaseUser = await _auth.currentUser();
-    return firebaseUser != null;
+  Future<bool> get isUserLogin async {
+    try {
+      FirebaseUser firebaseUser = await _auth.currentUser();
+      return firebaseUser != null;
+    } catch (e) {
+      handleCommonException(e);
+    }
+
+    return false;
   }
 
-  Future<void> signOut() async {
-    await _googleSignIn.signOut();
-    await _auth.signOut();
+  Future<void> logout() async {
+    try {
+      await _googleSignIn.signOut();
+      await _auth.signOut();
+    } catch (e) {
+      handleCommonException(e);
+    }
   }
 }

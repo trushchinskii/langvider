@@ -15,7 +15,7 @@ class SplashScreenWm extends BaseWidgetModel {
 
   void _checkUserLogin() async {
     Future<List> futures = Future.wait([
-      _authInteractor.isUserAuth,
+      _authInteractor.isUserLogin,
       Future.delayed(Duration(seconds: 1)),
     ]);
 

@@ -23,6 +23,8 @@ class BaseWidgetModel {
 
   /// Executed when widget call dispose method
   void dispose() {}
+
+  void handleError(Exception e) {}
 }
 
 class WmDependencies {

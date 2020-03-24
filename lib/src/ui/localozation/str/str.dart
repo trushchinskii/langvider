@@ -11,8 +11,9 @@ abstract class Str {
   // Login Screen
   String get loginTitle => "Войти:";
   String get googleButtonText => "GOOGLE";
+  String get loginTooltip => "Войдите в учётную запись";
 
   // Errors
   String get loginError =>
-      "Произошла ошибка авторизации. Проверьте соединение с интернетом и повторите снова";
+      "Произошла ошибка авторизации.\nПроверьте соединение с интернетом и повторите снова";
 }
