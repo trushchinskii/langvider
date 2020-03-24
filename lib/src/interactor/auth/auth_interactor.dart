@@ -1,5 +1,5 @@
 import 'package:langvider/src/domain/user.dart';
-import 'package:langvider/src/interactors/auth/repository/auth_repository.dart';
+import 'package:langvider/src/interactor/auth/repository/auth_repository.dart';
 
 class AuthInteractor {
   final AuthRepository _authRepository;

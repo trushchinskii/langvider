@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:langvider/src/interactors/common/http/http.dart';
+import 'package:langvider/src/interactor/common/http/http.dart';
 
 /// Custom http client by dio
 class DioHttp implements Http {

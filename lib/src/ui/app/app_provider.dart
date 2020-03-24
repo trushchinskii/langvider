@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:langvider/src/interactors/auth/auth_interactor.dart';
-import 'package:langvider/src/interactors/auth/repository/auth_repository.dart';
-import 'package:langvider/src/interactors/common/http/http.dart';
-import 'package:langvider/src/interactors/common/http/implementation/dio_http.dart';
+import 'package:langvider/src/interactor/auth/auth_interactor.dart';
+import 'package:langvider/src/interactor/auth/repository/auth_repository.dart';
+import 'package:langvider/src/interactor/common/http/http.dart';
+import 'package:langvider/src/interactor/common/http/implementation/dio_http.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:provider/provider.dart';
 

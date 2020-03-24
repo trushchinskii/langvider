@@ -4,7 +4,7 @@ import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
-import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
+import 'package:langvider/src/ui/screen/splash/splash_screen_route.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 
 class App extends StatefulWidget {

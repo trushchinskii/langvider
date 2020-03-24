@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:langvider/src/interactors/common/exception/login_exception.dart';
+import 'package:langvider/src/interactor/common/exception/login_exception.dart';
 
 const _loginErrorCode = 'sign_in_failed';
 

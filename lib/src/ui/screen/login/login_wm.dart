@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:langvider/src/domain/user.dart';
-import 'package:langvider/src/interactors/auth/auth_interactor.dart';
-import 'package:langvider/src/interactors/common/exception/login_exception.dart';
+import 'package:langvider/src/interactor/auth/auth_interactor.dart';
+import 'package:langvider/src/interactor/common/exception/login_exception.dart';
 import 'package:langvider/src/ui/base/message_controller/message_controller.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
-import 'package:langvider/src/ui/screens/main/main_screen_route.dart';
+import 'package:langvider/src/ui/screen/main/main_screen_route.dart';
 
 class LoginScreenWm extends BaseWidgetModel {
   final AuthInteractor _authInteractor;
@@ -49,6 +49,5 @@ class LoginScreenWm extends BaseWidgetModel {
         type: MessageType.error,
       );
     }
-    // TODO  rename all plural names to singular
   }
 }

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langvider/src/domain/user.dart';
-import 'package:langvider/src/interactors/common/base/base_repository.dart';
+import 'package:langvider/src/interactor/common/base/base_repository.dart';
 
 class AuthRepository extends BaseRepository {
   final GoogleSignIn _googleSignIn = GoogleSignIn(

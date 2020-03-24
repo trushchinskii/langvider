@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
-import 'package:langvider/src/ui/screens/login/login_wm.dart';
-import 'package:langvider/src/ui/screens/splash/widget/splash_widget.dart';
+import 'package:langvider/src/ui/screen/login/login_wm.dart';
+import 'package:langvider/src/ui/screen/splash/widget/splash_widget.dart';
 import 'package:langvider/src/ui/widget/rounded_button.dart';
 
 class LoginScreen extends BaseWidget {
