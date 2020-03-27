@@ -7,9 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'splash_screen.dart';
 
-class SplashScreenRoute extends MaterialPageRoute {
-  static const name = "/";
-
+class SplashScreenRoute extends MaterialPageRoute<void> {
   SplashScreenRoute()
       : super(
           builder: (context) {
@@ -18,6 +16,8 @@ class SplashScreenRoute extends MaterialPageRoute {
             );
           },
         );
+
+  static const name = '/';
 }
 
 class _SplashScreenProvider extends Provider<SplashScreenWm> {

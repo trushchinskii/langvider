@@ -20,19 +20,20 @@ class AuthRepository extends BaseRepository {
     User user;
 
     try {
-      GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
+      final GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
       if (googleAccount == null) return null;
 
-      GoogleSignInAuthentication googleAuthentication =
+      final GoogleSignInAuthentication googleAuthentication =
           await googleAccount.authentication;
-      AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleAuthentication.accessToken,
         idToken: googleAuthentication.idToken,
       );
-      AuthResult authResult = await _auth.signInWithCredential(credential);
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential);
 
       if (authResult.user != null) user = User(authResult.user);
-    } catch (e) {
+    } on Exception catch (e) {
       handleCommonException(e);
     }
 
@@ -41,9 +42,9 @@ class AuthRepository extends BaseRepository {
 
   Future<bool> get isUserLogin async {
     try {
-      FirebaseUser firebaseUser = await _auth.currentUser();
+      final FirebaseUser firebaseUser = await _auth.currentUser();
       return firebaseUser != null;
-    } catch (e) {
+    } on Exception catch (e) {
       handleCommonException(e);
     }
 
@@ -54,7 +55,7 @@ class AuthRepository extends BaseRepository {
     try {
       await _googleSignIn.signOut();
       await _auth.signOut();
-    } catch (e) {
+    } on Exception catch (e) {
       handleCommonException(e);
     }
   }

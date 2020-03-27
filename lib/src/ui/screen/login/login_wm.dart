@@ -6,20 +6,21 @@ import 'package:langvider/src/interactor/common/exception/login_exception.dart';
 import 'package:langvider/src/ui/base/message_controller/message_controller.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/screen/main/main_screen_route.dart';
+import 'package:pedantic/pedantic.dart';
 
 class LoginScreenWm extends BaseWidgetModel {
-  final AuthInteractor _authInteractor;
-
-  final _streamController = StreamController<void>();
-  Stream get loginStream => _streamController.stream;
-  StreamSink get loginSink => _streamController.sink;
-
   LoginScreenWm(
     WmDependencies dependencies,
     this._authInteractor,
   ) : super(dependencies) {
     _initListeners();
   }
+
+  final AuthInteractor _authInteractor;
+
+  final _streamController = StreamController<void>();
+  Stream get loginStream => _streamController.stream;
+  StreamSink get loginSink => _streamController.sink;
 
   @override
   void dispose() {
@@ -32,11 +33,11 @@ class LoginScreenWm extends BaseWidgetModel {
     _streamController.stream.listen((_) => _login());
   }
 
-  void _login() async {
+  Future<void> _login() async {
     try {
-      User user = await _authInteractor.login();
+      final User user = await _authInteractor.login();
       if (user != null) {
-        globalNavigator.pushReplacement(MainScreenRoute());
+        unawaited(globalNavigator.pushReplacement(MainScreenRoute()));
       } else {
         messageController.showSnack(
           str.loginTooltip,

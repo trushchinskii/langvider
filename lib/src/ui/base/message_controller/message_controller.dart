@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 
 class MessageController {
-  final GlobalKey<ScaffoldState> _scaffoldKey;
-
   MessageController(this._scaffoldKey);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey;
 
   BuildContext get _context => _scaffoldKey.currentContext;
 

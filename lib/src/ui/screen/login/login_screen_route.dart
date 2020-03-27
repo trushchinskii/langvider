@@ -6,7 +6,7 @@ import 'package:langvider/src/ui/screen/login/login_wm.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreenRoute extends MaterialPageRoute {
+class LoginScreenRoute extends MaterialPageRoute<void> {
   LoginScreenRoute()
       : super(
           builder: (context) => _LoginScreenProvider(

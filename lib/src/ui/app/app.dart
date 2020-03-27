@@ -25,9 +25,7 @@ class _AppState extends State<App> {
       supportedLocales: LocalizationConfig.supportedLocales,
       theme: _buildAppTheme(),
       initialRoute: SplashScreenRoute.name,
-      onGenerateRoute: (RouteSettings settings) {
-        return _onGenerateFirstRoute(settings);
-      },
+      onGenerateRoute: _onGenerateFirstRoute,
     );
   }
 
@@ -92,7 +90,7 @@ class _AppState extends State<App> {
       case SplashScreenRoute.name:
         return SplashScreenRoute();
       default:
-        throw Exception("Unknown route name ${settings.name}");
+        throw Exception('Unknown route name ${settings.name}');
     }
   }
 }

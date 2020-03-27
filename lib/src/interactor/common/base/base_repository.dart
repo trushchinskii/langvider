@@ -4,7 +4,7 @@ class BaseRepository {
   final _exceptionMapper = ExceptionMapper();
 
   void handleCommonException(Exception e) {
-    Exception mappedException = _exceptionMapper.mapCommonError(e);
+    final Exception mappedException = _exceptionMapper.mapCommonError(e);
 
     throw mappedException;
   }

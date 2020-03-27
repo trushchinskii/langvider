@@ -3,18 +3,18 @@ import 'package:langvider/src/interactor/common/http/http.dart';
 
 /// Custom http client by dio
 class DioHttp implements Http {
-  Dio _dio = Dio();
-
   DioHttp() {
     _dio.interceptors.add(LogInterceptor());
   }
 
+  final _dio = Dio();
+
   @override
-  Future<Response> post({
+  Future<Response<T>> post<T>({
     String url,
     HttpRequest request,
   }) {
-    return _dio.post(
+    return _dio.post<T>(
       url,
       queryParameters: request.json,
     );

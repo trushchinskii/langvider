@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 
 class SplashWidget extends StatelessWidget {
-  final String title;
-
   SplashWidget(this.title);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) => Text(

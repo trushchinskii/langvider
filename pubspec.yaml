@@ -11,6 +11,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^0.1.2
+  
+  pedantic: ^1.8.0
 
   provider: ^4.0.4
 

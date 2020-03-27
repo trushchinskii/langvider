@@ -2,11 +2,9 @@ import 'package:langvider/src/domain/user.dart';
 import 'package:langvider/src/interactor/auth/repository/auth_repository.dart';
 
 class AuthInteractor {
-  final AuthRepository _authRepository;
+  AuthInteractor(this._authRepository);
 
-  AuthInteractor(
-    this._authRepository,
-  );
+  final AuthRepository _authRepository;
 
   /// Sign in in google account
   ///

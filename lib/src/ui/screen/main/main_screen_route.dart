@@ -4,7 +4,7 @@ import 'package:langvider/src/ui/screen/main/main_screen.dart';
 import 'package:langvider/src/ui/screen/main/main_wm.dart';
 import 'package:provider/provider.dart';
 
-class MainScreenRoute extends MaterialPageRoute {
+class MainScreenRoute extends MaterialPageRoute<void> {
   MainScreenRoute()
       : super(
           builder: (context) => _MainScreenProvider(
