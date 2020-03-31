@@ -35,8 +35,8 @@ class LoginScreenWm extends BaseWidgetModel {
 
   Future<void> _login() async {
     try {
-      final User user = await _authInteractor.login();
-      if (user != null) {
+      final isUserLogin = await _authInteractor.login();
+      if (isUserLogin) {
         unawaited(globalNavigator.pushReplacement(MainScreenRoute()));
       } else {
         messageController.showSnack(

@@ -16,28 +16,32 @@ class AuthRepository extends BaseRepository {
   /// Sign in in google account
   ///
   /// Return [User] if user login and null if doesn't
-  Future<User> login() async {
-    User user;
-
+  Future<bool> login() async {
     try {
-      final GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
-      if (googleAccount == null) return null;
-
-      final GoogleSignInAuthentication googleAuthentication =
-          await googleAccount.authentication;
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-        accessToken: googleAuthentication.accessToken,
-        idToken: googleAuthentication.idToken,
-      );
-      final AuthResult authResult =
-          await _auth.signInWithCredential(credential);
-
-      if (authResult.user != null) user = User(authResult.user);
+      final FirebaseUser firebaseUser = await _loginByGoogle();
+      return firebaseUser != null;
     } on Exception catch (e) {
       handleCommonException(e);
     }
 
-    return user;
+    return false;
+  }
+
+  /// Return null if login was aborted
+  Future<FirebaseUser> _loginByGoogle() async {
+    final GoogleSignInAccount googleAccount = await _googleSignIn.signIn();
+    if (googleAccount == null) return null;
+
+    final GoogleSignInAuthentication googleAuthentication =
+        await googleAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: googleAuthentication.accessToken,
+      idToken: googleAuthentication.idToken,
+    );
+    final AuthResult authResult = await _auth.signInWithCredential(credential);
+
+    return authResult.user;
   }
 
   Future<bool> get isUserLogin async {
