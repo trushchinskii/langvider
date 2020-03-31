@@ -1,7 +1,7 @@
 /// Custom http client
 abstract class Http {
   /// Post request
-  Future post({
+  Future post<T>({
     String url,
     HttpRequest request,
   });

@@ -6,8 +6,14 @@ abstract class Str {
   }
 
   // Splash Screen
-  String get splashScreenTitle => "Langvider";
+  String get splashScreenTitle => 'Langvider';
+
+  // Login Screen
+  String get loginTitle => 'Войти:';
+  String get googleButtonText => 'GOOGLE';
+  String get loginTooltip => 'Войдите в учётную запись';
 
   // Errors
-  String get authError => "Authorization error";
+  String get loginError => 'Произошла ошибка авторизации.\n'
+      'Проверьте соединение с интернетом и повторите снова';
 }

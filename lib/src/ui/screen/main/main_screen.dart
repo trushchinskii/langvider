@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
-import 'package:langvider/src/ui/screens/main/main_wm.dart';
+import 'package:langvider/src/ui/screen/main/main_wm.dart';
 
 class MainScreen extends BaseWidget {
   @override

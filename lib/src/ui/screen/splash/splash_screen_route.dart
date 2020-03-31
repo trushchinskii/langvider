@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:langvider/src/interactors/auth/auth_interactor.dart';
-import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
+import 'package:langvider/src/interactor/auth/auth_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
-import 'package:langvider/src/ui/screens/splash/splash_wm.dart';
+import 'package:langvider/src/ui/screen/splash/splash_wm.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'splash_screen.dart';
 
-class SplashScreenRoute extends MaterialPageRoute {
-  static const name = "/";
-
+class SplashScreenRoute extends MaterialPageRoute<void> {
   SplashScreenRoute()
       : super(
           builder: (context) {
@@ -19,6 +16,8 @@ class SplashScreenRoute extends MaterialPageRoute {
             );
           },
         );
+
+  static const name = '/';
 }
 
 class _SplashScreenProvider extends Provider<SplashScreenWm> {
@@ -27,8 +26,7 @@ class _SplashScreenProvider extends Provider<SplashScreenWm> {
   }) : super(
           create: (context) {
             return SplashScreenWm(
-              WmDependencies(context),
-              ProviderUtils.provide<GlobalNavigator>(context),
+              WmDependencies(context, GlobalKey()),
               ProviderUtils.provide<AuthInteractor>(context),
             );
           },

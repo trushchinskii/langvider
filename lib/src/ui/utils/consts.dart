@@ -1,1 +1,1 @@
-const EMPTY_STRING = '';
+const emptyString = '';

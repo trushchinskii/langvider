@@ -4,7 +4,7 @@ import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/localozation/localization_config.dart';
 import 'package:langvider/src/ui/localozation/localization_delegate.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
-import 'package:langvider/src/ui/screens/splash/splash_screen_route.dart';
+import 'package:langvider/src/ui/screen/splash/splash_screen_route.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 
 class App extends StatefulWidget {
@@ -25,9 +25,7 @@ class _AppState extends State<App> {
       supportedLocales: LocalizationConfig.supportedLocales,
       theme: _buildAppTheme(),
       initialRoute: SplashScreenRoute.name,
-      onGenerateRoute: (RouteSettings settings) {
-        return _onGenerateFirstRoute(settings);
-      },
+      onGenerateRoute: _onGenerateFirstRoute,
     );
   }
 
@@ -39,6 +37,11 @@ class _AppState extends State<App> {
         primaryColorDark: primaryDarkColor,
         accentColor: secondaryColor,
         errorColor: errorColor,
+        buttonTheme: base.buttonTheme.copyWith(
+          buttonColor: secondaryColor,
+          shape: RoundedRectangleBorder(),
+          textTheme: ButtonTextTheme.primary,
+        ),
         bottomAppBarColor: primaryColor,
         floatingActionButtonTheme: base.floatingActionButtonTheme.copyWith(
           backgroundColor: secondaryColor,
@@ -46,16 +49,22 @@ class _AppState extends State<App> {
         scaffoldBackgroundColor: backgroundColor,
         accentIconTheme: base.iconTheme.copyWith(color: secondaryIconColor),
         primaryIconTheme: base.iconTheme.copyWith(color: primaryIconColor),
-        textTheme: _buildShrineTextTheme(base.textTheme),
-        primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-        accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
+        textTheme: _buildTextTheme(base.textTheme),
+        primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+        accentTextTheme: _buildTextTheme(base.accentTextTheme),
         iconTheme: base.iconTheme.copyWith(color: primaryIconColor),
         appBarTheme: base.appBarTheme.copyWith(color: primaryColor));
   }
 
-  TextTheme _buildShrineTextTheme(TextTheme base) {
+  // https://api.flutter.dev/flutter/material/TextTheme-class.html
+  TextTheme _buildTextTheme(TextTheme base) {
     return base
         .copyWith(
+            title: TextStyle(
+          color: onPrimaryColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        )
 //        headline: base.headline.copyWith(\
 //          fontWeight: FontWeight.w500,
 //        ),
@@ -81,7 +90,7 @@ class _AppState extends State<App> {
       case SplashScreenRoute.name:
         return SplashScreenRoute();
       default:
-        throw Exception("Unknown route name ${settings.name}");
+        throw Exception('Unknown route name ${settings.name}');
     }
   }
 }
