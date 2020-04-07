@@ -9,11 +9,11 @@ class BaseWidgetModel {
   BaseWidgetModel(WmDependencies dependencies)
       : scaffoldKey = dependencies.scaffoldKey,
         messageController = dependencies.messageController,
-        globalNavigator = dependencies.globalNavigator,
+        navigator = dependencies.globalNavigator,
         str = dependencies.str;
 
   final MessageController messageController;
-  final GlobalNavigator globalNavigator;
+  final GlobalNavigator navigator;
   final Str str;
 
   final GlobalKey<ScaffoldState> scaffoldKey;

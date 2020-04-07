@@ -37,7 +37,7 @@ class LoginScreenWm extends BaseWidgetModel {
     try {
       final isUserLogin = await _authInteractor.login();
       if (isUserLogin) {
-        unawaited(globalNavigator.pushReplacement(MainScreenRoute()));
+        unawaited(navigator.pushReplacement(MainScreenRoute()));
       } else {
         messageController.showSnack(
           str.loginTooltip,

@@ -23,9 +23,9 @@ class SplashScreenWm extends BaseWidgetModel {
     final isUserAuth = (await futures)[0];
 
     if (isUserAuth) {
-      unawaited(globalNavigator.pushReplacement(MainScreenRoute()));
+      unawaited(navigator.pushReplacement(MainScreenRoute()));
     } else {
-      unawaited(globalNavigator.pushReplacement(LoginScreenRoute()));
+      unawaited(navigator.pushReplacement(LoginScreenRoute()));
     }
   }
 }

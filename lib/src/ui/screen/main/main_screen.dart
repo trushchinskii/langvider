@@ -16,17 +16,19 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: _buildDrawer(),
       body: Center(
-        // TODO implement screen body
-        child: Text(str.splashScreenTitle),
+        child: StreamBuilder(
+          stream: wm.openNewWordScreenSC.stream,
+          builder: (context, AsyncSnapshot<void> snapshot) {
+            // TODO
+          },
+        ),
       ),
     );
   }
 
   Widget _buildFloatingActionButton() => FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          // TODO open new word screen
-        },
+        onPressed: () => wm.openNewWordScreen.add(null),
       );
 
   Widget _buildDrawer() {
