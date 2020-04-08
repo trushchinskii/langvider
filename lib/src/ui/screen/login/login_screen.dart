@@ -33,9 +33,7 @@ class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
           SizedBox(height: 24),
           RoundedButton(
             title: str.googleButtonText,
-            onPressed: () {
-              wm.loginSink.add(null);
-            },
+            onPressed: wm.login,
           ),
           SizedBox(height: 64)
         ],
