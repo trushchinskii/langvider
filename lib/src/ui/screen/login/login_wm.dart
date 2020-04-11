@@ -16,11 +16,11 @@ class LoginScreenWm extends BaseWidgetModel {
 
   final AuthInteractor _authInteractor;
 
-  final login = Action();
+  final loginAction = Action();
 
   @override
   void initListeners() {
-    listen(login, (_) => _login());
+    listen(loginAction, (_) => _login());
   }
 
   Future<void> _login() async {

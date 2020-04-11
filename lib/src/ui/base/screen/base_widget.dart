@@ -47,6 +47,7 @@ abstract class BaseWidgetState<W extends BaseWidget, WM extends BaseWidgetModel>
     return buildWidget(context);
   }
 
+  // TODO remove this method
   Widget buildWidget(BuildContext context);
 
   @override
