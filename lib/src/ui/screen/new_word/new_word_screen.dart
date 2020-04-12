@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:langvider/src/interactor/common/logger/logger.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/base/state_management/widget/state_builder.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_wm.dart';
+import 'package:langvider/src/ui/utils/focus_navigator.dart';
+import 'package:langvider/src/ui/widget/visible_if_keyboard_hided.dart';
 
 class NewWordScreen extends BaseWidget {
   @override
@@ -9,6 +12,18 @@ class NewWordScreen extends BaseWidget {
 }
 
 class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
+  _NewWordState() {
+    _focusManager = FocusNavigator([
+      _wordFocus,
+      _translationFocus,
+    ]);
+  }
+
+  final _wordFocus = FocusNode();
+  final _translationFocus = FocusNode();
+
+  FocusNavigator _focusManager;
+
   @override
   Widget buildWidget(BuildContext context) {
     return Scaffold(
@@ -34,7 +49,6 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
     );
   }
 
-  // TODO add focuses
   Widget _buildWord() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -44,6 +58,10 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
           labelText: str.newWordWordLabel,
           border: const OutlineInputBorder(),
         ),
+        autofocus: true,
+        focusNode: _wordFocus,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (_) => _focusManager.next(),
       ),
     );
   }
@@ -57,25 +75,38 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
           labelText: str.newWordTranslationLabel,
           border: const OutlineInputBorder(),
         ),
+        focusNode: _translationFocus,
+        textInputAction: TextInputAction.done,
+        onSubmitted: (_) => _focusManager.next(),
       ),
     );
   }
 
   Widget _buildButton() {
-    return Container(
-      height: 42,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: StateBuilder<bool>(
-        state: wm.enableAddWordButtonState,
-        builder: (context, isEnable) => RaisedButton(
-          child: Text(str.newWordButtonText),
-          onPressed: isEnable ? wm.addWordAction : null,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
+    return VisibleIfKeyboardHided(
+      child: Container(
+        height: 42,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: StateBuilder<bool>(
+          state: wm.enableAddWordButtonState,
+          builder: (context, isEnable) => RaisedButton(
+            child: Text(str.newWordButtonText),
+            onPressed: isEnable ? wm.addWordAction : null,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _wordFocus.dispose();
+    _translationFocus.dispose();
+
+    super.dispose();
   }
 }
