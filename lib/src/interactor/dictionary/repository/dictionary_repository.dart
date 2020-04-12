@@ -10,7 +10,7 @@ class DictionaryRepository extends BaseRepository {
         _dictionaryCollectionName,
       );
 
-  Stream<List<Word>> getWords() => handle(() {
+  Stream<List<Word>> getWords() => handleExecute(() {
         return _dictionary.snapshots().map((querySnapshot) {
           return querySnapshot.documents.map((documentSnapshot) {
             return WordDto.fromSnapshot(documentSnapshot).transform();
@@ -18,13 +18,13 @@ class DictionaryRepository extends BaseRepository {
         });
       });
 
-  Future<void> addWord(Word word) => handle(() {
+  Future<void> addWord(Word word) => handleExecute(() {
         return _dictionary.add(
           WordDto.fromWord(word).map,
         );
       });
 
-  // TODO
-  // Future<void> deleteWord(Word word) =>
-  // _dictionary.document(word.id).delete();
+  Future<void> deleteWord(Word word) => handleExecute(() {
+        return _dictionary.document(word.id).delete();
+      });
 }

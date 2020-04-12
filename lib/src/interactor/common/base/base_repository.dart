@@ -5,7 +5,7 @@ class BaseRepository {
   final _exceptionMapper = ExceptionMapper();
 
   @protected
-  T handle<T>(T Function() executedBlock) {
+  T handleExecute<T>(T Function() executedBlock) {
     try {
       return executedBlock();
     } on Exception catch (e) {
