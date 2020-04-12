@@ -103,7 +103,7 @@ T _getDataFromSnapshot<T>(
   DocumentSnapshot snapshot,
   String fieldName,
 ) {
-  final dynamic data = snapshot.data[_textFieldName];
+  final dynamic data = snapshot.data[fieldName];
 
   if (data is T) {
     return data;

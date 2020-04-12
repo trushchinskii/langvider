@@ -10,12 +10,12 @@ class DictionaryRepository extends BaseRepository {
         _dictionaryCollectionName,
       );
 
-  Stream<List<Word>> getWords() => handleExecute(() {
-        return _dictionary.snapshots().map((querySnapshot) {
-          return querySnapshot.documents.map((documentSnapshot) {
-            return WordDto.fromSnapshot(documentSnapshot).transform();
-          }).toList();
-        });
+  Future<List<Word>> getWords() => handleExecute(() async {
+        final querySnapshot = await _dictionary.getDocuments();
+
+        return querySnapshot.documents.map((documentSnapshot) {
+          return WordDto.fromSnapshot(documentSnapshot).transform();
+        }).toList();
       });
 
   Future<void> addWord(Word word) => handleExecute(() {

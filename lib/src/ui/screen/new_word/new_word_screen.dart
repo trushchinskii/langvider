@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:langvider/src/interactor/common/logger/logger.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/base/state_management/widget/state_builder.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_wm.dart';

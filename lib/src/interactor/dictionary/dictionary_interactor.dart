@@ -20,4 +20,6 @@ class DictionaryInteractor {
       word.copy(userId: user.id),
     );
   }
+
+  Future<List<Word>> getWords() => _repository.getWords();
 }

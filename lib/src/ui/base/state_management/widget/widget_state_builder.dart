@@ -1,24 +1,24 @@
 import 'package:flutter/widgets.dart';
-import 'package:langvider/src/ui/base/state_management/state/widget_state_stream.dart';
+import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 
 typedef DataWidgetBuilder<T> = Widget Function(BuildContext, T data);
 typedef ErrorWidgetBuilder = Widget Function(BuildContext, Exception error);
 typedef LoadingWidgetBuilder = Widget Function(BuildContext);
 
-class WidgetStateBuilder<T> extends StatelessWidget {
-  const WidgetStateBuilder({
-    @required this.streamedState,
+class LoadingBuilder<T> extends StatelessWidget {
+  const LoadingBuilder({
+    @required this.state,
     @required this.builder,
     @required this.loadingBuilder,
     @required this.errorBuilder,
     Key key,
-  })  : assert(streamedState != null),
+  })  : assert(state != null),
         assert(
           builder != null && loadingBuilder != null && errorBuilder != null,
         ),
         super(key: key);
 
-  final LoadingStateStream<T> streamedState;
+  final LoadingStateStream<T> state;
 
   final DataWidgetBuilder<T> builder;
   final LoadingWidgetBuilder loadingBuilder;
@@ -26,14 +26,14 @@ class WidgetStateBuilder<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StreamBuilder<LoadingState<T>>(
-        stream: streamedState.stream,
-        initialData: streamedState.value,
+        stream: state.stream,
+        initialData: state.initialData,
         builder: (context, snapshot) {
           final LoadingState<T> state = snapshot.data;
 
-          if (state.isLoading) {
+          if (state?.isLoading ?? false) {
             return _buildLoadingState(context);
-          } else if (state.hasError) {
+          } else if (state?.hasError ?? false) {
             return _buildErrorState(snapshot, context);
           } else {
             return _buildContentState(context, state);
@@ -60,6 +60,6 @@ class WidgetStateBuilder<T> extends StatelessWidget {
     BuildContext context,
     LoadingState<T> state,
   ) {
-    return builder(context, state.data);
+    return builder(context, state?.data);
   }
 }

@@ -22,6 +22,9 @@ abstract class Str {
   String get newWordTranslationLabel => 'Перевод';
   String get newWordButtonText => 'Добавить';
 
+  // Dictionary
+  String get dictionaryAppBarTitle => 'Словарь';
+
   // Errors
   String get loginError => 'Произошла ошибка авторизации.\n'
       'Проверьте соединение с интернетом и повторите снова';

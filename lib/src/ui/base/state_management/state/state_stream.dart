@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:langvider/src/ui/base/state_management/state/base/streamable.dart';
 
 class StateStream<T> implements Streamable<T> {
-  StateStream([T initialData]) {
+  StateStream([this.initialData]) {
     if (initialData != null) accept(initialData);
   }
 
-  final _stateStreamController = StreamController<T>();
+  final T initialData;
+
+  final _stateStreamController = StreamController<T>.broadcast();
 
   @override
   Stream<T> get stream => _stateStreamController.stream;
