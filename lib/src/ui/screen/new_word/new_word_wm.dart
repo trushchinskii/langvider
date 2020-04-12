@@ -4,6 +4,8 @@ import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/state_stream.dart';
 import 'package:langvider/src/ui/base/state_management/state/text_state_stream.dart';
+import 'package:langvider/src/ui/screen/dictionary/dictionary_screen_route.dart';
+import 'package:pedantic/pedantic.dart';
 
 class NewWordScreenWm extends BaseWidgetModel {
   NewWordScreenWm(
@@ -44,12 +46,15 @@ class NewWordScreenWm extends BaseWidgetModel {
     return isEnable;
   }
 
-  void _addWord() {
-    _dictionaryInteractor.addWord(Word(
+  Future<void> _addWord() async {
+    await _dictionaryInteractor.addWord(Word(
       text: wordState.text,
       translation: translationState.text,
       score: 0,
       createdDate: DateTime.now(),
     ));
+
+    // TODO create loadingWidget with 2 states
+    unawaited(navigator.pushReplacement(DictionaryScreenRoute()));
   }
 }

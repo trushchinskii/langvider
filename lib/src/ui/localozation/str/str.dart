@@ -13,6 +13,9 @@ abstract class Str {
   String get googleButtonText => 'GOOGLE';
   String get loginTooltip => 'Войдите в учётную запись';
 
+  // MainScreen
+  String get mainScreenDictionaryTitle => 'Словарь';
+
   // New Word
   String get newWordAppBarTitle => 'Новое слово';
   String get newWordWordLabel => 'Слово';
