@@ -16,26 +16,24 @@ class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
       key: wm.scaffoldKey,
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 144,
             width: double.infinity,
           ),
           SplashWidget(
             str.splashScreenTitle,
           ),
-          Expanded(
-            child: SizedBox(),
-          ),
+          const Expanded(child: SizedBox()),
           Text(
             str.loginTitle,
             style: Theme.of(context).textTheme.title,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           RoundedButton(
             title: str.googleButtonText,
             onPressed: wm.loginAction,
           ),
-          SizedBox(height: 64)
+          const SizedBox(height: 64)
         ],
       ),
     );

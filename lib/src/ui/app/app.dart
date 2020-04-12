@@ -20,7 +20,7 @@ class _AppState extends State<App> {
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        AppLocalizationsDelegate()
+        const AppLocalizationsDelegate()
       ],
       supportedLocales: LocalizationConfig.supportedLocales,
       theme: _buildAppTheme(),
@@ -39,7 +39,7 @@ class _AppState extends State<App> {
         errorColor: errorColor,
         buttonTheme: base.buttonTheme.copyWith(
           buttonColor: secondaryColor,
-          shape: RoundedRectangleBorder(),
+          shape: const RoundedRectangleBorder(),
           textTheme: ButtonTextTheme.primary,
         ),
         bottomAppBarColor: primaryColor,

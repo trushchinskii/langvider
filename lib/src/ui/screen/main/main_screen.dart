@@ -15,9 +15,7 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
       floatingActionButton: _buildFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: _buildDrawer(),
-      body: Center(
-        child: Text("TODO"),
-      ),
+      body: const Center(child: Text('TODO')),
     );
   }
 
@@ -67,7 +65,7 @@ class _BottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       elevation: 8,
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

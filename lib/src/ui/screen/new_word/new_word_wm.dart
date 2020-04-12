@@ -1,11 +1,17 @@
-import 'package:langvider/src/interactor/common/logger/logger.dart';
+import 'package:langvider/src/domain/word.dart';
+import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/state_stream.dart';
 import 'package:langvider/src/ui/base/state_management/state/text_state_stream.dart';
 
 class NewWordScreenWm extends BaseWidgetModel {
-  NewWordScreenWm(WmDependencies dependencies) : super(dependencies);
+  NewWordScreenWm(
+    WmDependencies dependencies,
+    this._dictionaryInteractor,
+  ) : super(dependencies);
+
+  final DictionaryInteractor _dictionaryInteractor;
 
   final wordState = TextStream();
   final translationState = TextStream();
@@ -39,6 +45,11 @@ class NewWordScreenWm extends BaseWidgetModel {
   }
 
   void _addWord() {
-    log.d('Add word');
+    _dictionaryInteractor.addWord(Word(
+      text: wordState.text,
+      translation: translationState.text,
+      score: 0,
+      createdDate: DateTime.now(),
+    ));
   }
 }

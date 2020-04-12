@@ -12,9 +12,7 @@ class _TemplateState extends BaseWidgetState<TemplateScreen, TemplateScreenWm> {
   Widget buildWidget(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
-      body: Center(
-        child: Text('TODO'),
-      ),
+      body: const Center(child: Text('TODO')),
     );
   }
 }

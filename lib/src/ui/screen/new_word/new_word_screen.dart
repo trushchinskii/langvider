@@ -20,7 +20,7 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
           _buildWord(),
           const SizedBox(height: 16),
           _buildTranslation(),
-          Expanded(child: SizedBox()),
+          const Expanded(child: SizedBox()),
           _buildButton(),
           const SizedBox(height: 16),
         ],
@@ -42,7 +42,7 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
         controller: wm.wordState.controller,
         decoration: InputDecoration(
           labelText: str.newWordWordLabel,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -55,7 +55,7 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
         controller: wm.translationState.controller,
         decoration: InputDecoration(
           labelText: str.newWordTranslationLabel,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
         ),
       ),
     );
@@ -65,7 +65,7 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
     return Container(
       height: 42,
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: StateBuilder<bool>(
         state: wm.enableAddWordButtonState,
         builder: (context, isEnable) => RaisedButton(
