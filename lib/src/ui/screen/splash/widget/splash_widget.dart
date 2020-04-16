@@ -20,17 +20,17 @@ class SplashWidget extends StatelessWidget {
             Shadow(
               blurRadius: 2,
               color: Colors.blue.withOpacity(0.14),
-              offset: Offset(0, 0),
+              offset: const Offset(0, 0),
             ),
             Shadow(
               blurRadius: 2,
               color: Colors.blue.withOpacity(0.12),
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
             Shadow(
               blurRadius: 3,
               color: Colors.blue.withOpacity(0.2),
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),

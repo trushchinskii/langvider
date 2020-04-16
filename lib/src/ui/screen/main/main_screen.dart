@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/screen/main/main_wm.dart';
+import 'package:langvider/src/ui/utils/colors.dart';
+import 'package:langvider/src/ui/utils/text_styles.dart';
 
 class MainScreen extends BaseWidget {
   @override
@@ -9,24 +11,19 @@ class MainScreen extends BaseWidget {
 
 class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _BottomAppBar(),
       floatingActionButton: _buildFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: _buildDrawer(),
-      body: Center(
-        // TODO implement screen body
-        child: Text(str.splashScreenTitle),
-      ),
+      body: _buildBody(),
     );
   }
 
   Widget _buildFloatingActionButton() => FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          // TODO open new word screen
-        },
+        onPressed: wm.openNewWordScreenAction,
       );
 
   Widget _buildDrawer() {
@@ -63,6 +60,37 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
       ),
     );
   }
+
+  Widget _buildBody() => SafeArea(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 24),
+            _buildDictionary(),
+          ],
+        ),
+      );
+
+  Container _buildDictionary() => Container(
+        height: 84,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: RaisedButton(
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              str.mainScreenDictionaryTitle,
+              style: h5,
+            ),
+          ),
+          padding: const EdgeInsets.only(left: 16, bottom: 8),
+          color: reefColor,
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          onPressed: wm.openDictionaryScreenAction,
+        ),
+      );
 }
 
 class _BottomAppBar extends StatelessWidget {
@@ -70,7 +98,7 @@ class _BottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       elevation: 8,
-      shape: CircularNotchedRectangle(),
+      shape: const CircularNotchedRectangle(),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

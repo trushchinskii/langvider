@@ -24,9 +24,11 @@ dependencies:
   cloud_firestore: 0.12.9+5
   google_sign_in: 4.0.7
 
-  google_fonts: ^0.3.9
+  google_fonts: 0.3.9
 
-  logger: ^0.8.3
+  logger: 0.8.3
+
+  keyboard_visibility: 0.5.6
 
 dev_dependencies:
   flutter_test:

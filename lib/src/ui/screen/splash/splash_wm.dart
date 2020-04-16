@@ -17,15 +17,15 @@ class SplashScreenWm extends BaseWidgetModel {
   Future<void> _checkUserLogin() async {
     final Future<List<bool>> futures = Future.wait([
       _authInteractor.isUserLogin,
-      Future.delayed(Duration(seconds: 1)),
+      Future.delayed(const Duration(seconds: 1)),
     ]);
 
     final isUserAuth = (await futures)[0];
 
     if (isUserAuth) {
-      unawaited(globalNavigator.pushReplacement(MainScreenRoute()));
+      unawaited(navigator.pushReplacement(MainScreenRoute()));
     } else {
-      unawaited(globalNavigator.pushReplacement(LoginScreenRoute()));
+      unawaited(navigator.pushReplacement(LoginScreenRoute()));
     }
   }
 }

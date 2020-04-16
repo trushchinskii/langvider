@@ -11,33 +11,29 @@ class LoginScreen extends BaseWidget {
 
 class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 144,
             width: double.infinity,
           ),
           SplashWidget(
             str.splashScreenTitle,
           ),
-          Expanded(
-            child: SizedBox(),
-          ),
+          const Expanded(child: SizedBox()),
           Text(
             str.loginTitle,
             style: Theme.of(context).textTheme.title,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           RoundedButton(
             title: str.googleButtonText,
-            onPressed: () {
-              wm.loginSink.add(null);
-            },
+            onPressed: wm.loginAction,
           ),
-          SizedBox(height: 64)
+          const SizedBox(height: 64)
         ],
       ),
     );
