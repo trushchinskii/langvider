@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/base/state_management/widget/widget_state_builder.dart';
 import 'package:langvider/src/ui/screen/dictionary/dictionary_wm.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
+
+// TODO add ptr for refreshing
 
 class DictionaryScreen extends BaseWidget {
   @override
@@ -19,6 +22,10 @@ class _DictionaryState
       appBar: AppBar(
         title: Text(str.dictionaryAppBarTitle),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: wm.openNewWordScreenAction,
+      ),
       body: _buildBody(),
     );
   }
@@ -32,40 +39,44 @@ class _DictionaryState
     );
   }
 
-  Widget _buildWords(context, List<Word> words) {
-    return ListView.builder(
-      itemCount: words.length,
-      itemBuilder: (_, index) {
-        return _buildWord(words[index]);
-      },
-    );
-  }
+  Widget _buildWords(context, List<Word> words) => ListView.builder(
+        itemCount: words.length,
+        itemBuilder: (_, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 16,
+            ),
+            child: Slidable(
+              actionPane: const SlidableBehindActionPane(),
+              actionExtentRatio: 0.25,
+              child: _buildWord(words[index]),
+              secondaryActions: [_buildDeleteAction(words[index])],
+            ),
+          );
+        },
+      );
 
   Widget _buildWord(Word word) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
-        horizontal: 16,
+    return Card(
+      color: reefColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
       ),
-      child: Card(
-        color: reefColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+      child: Container(
+        height: 64,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 16,
         ),
-        child: Container(
-          height: 64,
-          padding: const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(word.text),
-              const Expanded(child: SizedBox()),
-              Text(word.translation),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(word.text),
+            const Expanded(child: SizedBox()),
+            Text(word.translation),
+          ],
         ),
       ),
     );
@@ -82,4 +93,13 @@ class _DictionaryState
       child: Text(exception.toString()),
     );
   }
+
+  Widget _buildDeleteAction(Word word) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IconSlideAction(
+          color: burntSiennaColor,
+          icon: Icons.delete,
+          onTap: () => wm.deleteWordAction(word),
+        ),
+      );
 }

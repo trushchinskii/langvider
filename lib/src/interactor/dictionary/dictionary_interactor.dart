@@ -22,4 +22,6 @@ class DictionaryInteractor {
   }
 
   Future<List<Word>> getWords() => _repository.getWords();
+
+  void deleteWord(Word word) => _repository.deleteWord(word);
 }
