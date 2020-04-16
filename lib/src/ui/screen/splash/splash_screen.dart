@@ -10,7 +10,7 @@ class SplashScreen extends BaseWidget {
 
 class _SplashState extends BaseWidgetState<SplashScreen, SplashScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: SplashWidget(

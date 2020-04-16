@@ -13,7 +13,7 @@ class DictionaryScreen extends BaseWidget {
 class _DictionaryState
     extends BaseWidgetState<DictionaryScreen, DictionaryScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
       appBar: AppBar(

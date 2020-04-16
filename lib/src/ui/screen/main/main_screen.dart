@@ -11,7 +11,7 @@ class MainScreen extends BaseWidget {
 
 class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _BottomAppBar(),
       floatingActionButton: _buildFloatingActionButton(),

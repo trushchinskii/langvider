@@ -11,7 +11,7 @@ class LoginScreen extends BaseWidget {
 
 class _LoginState extends BaseWidgetState<LoginScreen, LoginScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
       body: Column(

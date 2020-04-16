@@ -9,7 +9,7 @@ class TemplateScreen extends BaseWidget {
 
 class _TemplateState extends BaseWidgetState<TemplateScreen, TemplateScreenWm> {
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
       body: const Center(child: Text('TODO')),

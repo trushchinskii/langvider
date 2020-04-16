@@ -54,7 +54,6 @@ class NewWordScreenWm extends BaseWidgetModel {
       createdDate: DateTime.now(),
     ));
 
-    // TODO create loadingWidget with 2 states
     unawaited(navigator.pushReplacement(DictionaryScreenRoute()));
   }
 }

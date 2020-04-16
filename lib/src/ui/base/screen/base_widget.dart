@@ -43,14 +43,6 @@ abstract class BaseWidgetState<W extends BaseWidget, WM extends BaseWidgetModel>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return buildWidget(context);
-  }
-
-  // TODO remove this method
-  Widget buildWidget(BuildContext context);
-
-  @override
   void dispose() {
     wm.dispose();
     super.dispose();

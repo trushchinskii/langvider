@@ -24,7 +24,7 @@ class _NewWordState extends BaseWidgetState<NewWordScreen, NewWordScreenWm> {
   FocusNavigator _focusManager;
 
   @override
-  Widget buildWidget(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       key: wm.scaffoldKey,
       appBar: _buildAppBar(),
