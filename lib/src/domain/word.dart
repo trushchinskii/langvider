@@ -1,59 +1,44 @@
 import 'package:flutter/foundation.dart';
+import 'package:langvider/src/domain/training_progress.dart';
 
-@immutable
 class Word {
   Word({
     @required this.text,
     @required this.translation,
-    @required this.score,
     this.id,
+    this.memoryPoints = 0,
+    this.trainingPoints = 0,
+    this.trainingProgress = const TrainingProgress.empty(),
     this.createdDate,
-    this.updatedDate,
-    this.lastLearnedDate,
+    this.lastMemorizedDate,
+    this.lastTrainingDate,
     this.userId,
-  })  : assert(text != null && translation != null),
-        assert(score != null);
+  })  : assert(text != null && text.isNotEmpty),
+        assert(translation != null && translation.isNotEmpty),
+        assert(memoryPoints != null);
 
   final String id;
-  final String text;
-  final String translation;
-  final int score;
+  String text;
+  String translation;
+  int memoryPoints;
+  int trainingPoints;
+  final TrainingProgress trainingProgress;
   final DateTime createdDate;
-  final DateTime updatedDate;
-  final DateTime lastLearnedDate;
-  final String userId;
-
-  Word copy({
-    String id,
-    String text,
-    String translation,
-    int score,
-    DateTime createdDate,
-    DateTime updatedDate,
-    DateTime lastLearnedDate,
-    String userId,
-  }) {
-    return Word(
-      id: id ?? this.id,
-      text: text ?? this.text,
-      translation: translation ?? this.translation,
-      score: score ?? this.score,
-      createdDate: createdDate ?? this.createdDate,
-      updatedDate: updatedDate ?? this.updatedDate,
-      lastLearnedDate: lastLearnedDate ?? this.lastLearnedDate,
-      userId: userId ?? this.userId,
-    );
-  }
+  DateTime lastMemorizedDate;
+  DateTime lastTrainingDate;
+  String userId;
 
   @override
   String toString() => {
         'id': id,
         'text': text,
         'translation': translation,
-        'score': score,
+        'memoryPoints': memoryPoints,
+        'trainingPoints': trainingPoints,
+        'trainingProgress': trainingProgress,
         'createdDate': createdDate,
-        'updatedDate': updatedDate,
-        'lastLearnedDate': lastLearnedDate,
+        'lastMemorizedDate': lastMemorizedDate,
+        'lastTrainingDate': lastTrainingDate,
         'userId': userId,
       }.toString();
 }

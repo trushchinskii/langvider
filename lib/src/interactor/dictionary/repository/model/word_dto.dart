@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langvider/src/domain/word.dart';
+import 'package:langvider/src/interactor/dictionary/repository/model/training_progress_dto.dart';
 import 'package:langvider/src/ui/utils/transformable.dart';
 
 const _textFieldName = 'text';
 const _translationFieldName = 'translation';
-const _scoreFieldName = 'score';
+const _memoryPointsFieldName = 'memoryPoints';
+const _trainingPointsFieldName = 'trainingPoints';
+const _trainingProgressFieldName = 'trainingProgress';
 const _createdDateFieldName = 'createdDate';
-const _updatedDateFieldName = 'updatedDate';
-const _lastLearnedDateFieldName = 'lastLearnedDate';
+const _lastMemorizedDateFieldName = 'lastMemorizedDate';
+const _lastTrainingDateDateFieldName = 'lastTrainingDate';
 const _userIdFieldName = 'userId';
 
 class WordDto implements Transformable<Word> {
@@ -15,10 +18,12 @@ class WordDto implements Transformable<Word> {
     this.id,
     this.text,
     this.translation,
-    this.score,
+    this.memoryPoints,
+    this.trainingPoints,
+    this.trainingProgress,
     this.createdDate,
-    this.updatedDate,
-    this.lastLearnedDate,
+    this.lastMemorizedDate,
+    this.lastTrainingDate,
     this.userId,
   });
 
@@ -27,10 +32,12 @@ class WordDto implements Transformable<Word> {
           id: word.id,
           text: word.text,
           translation: word.translation,
-          score: word.score,
+          memoryPoints: word.memoryPoints,
+          trainingPoints: word.trainingPoints,
+          trainingProgress: TrainingProgressDto(word.trainingProgress),
           createdDate: word.createdDate,
-          updatedDate: word.updatedDate,
-          lastLearnedDate: word.lastLearnedDate,
+          lastMemorizedDate: word.lastMemorizedDate,
+          lastTrainingDate: word.lastTrainingDate,
           userId: word.userId,
         );
 
@@ -45,21 +52,31 @@ class WordDto implements Transformable<Word> {
             snapshot,
             _translationFieldName,
           ),
-          score: _getDataFromSnapshot(
+          memoryPoints: _getDataFromSnapshot(
             snapshot,
-            _scoreFieldName,
+            _memoryPointsFieldName,
+          ),
+          trainingPoints: _getDataFromSnapshot(
+            snapshot,
+            _trainingPointsFieldName,
+          ),
+          trainingProgress: TrainingProgressDto.fromJson(
+            _getDataFromSnapshot<Map>(
+              snapshot,
+              _trainingProgressFieldName,
+            ),
           ),
           createdDate: _getDataFromSnapshot(
             snapshot,
             _createdDateFieldName,
           ),
-          updatedDate: _getDataFromSnapshot(
+          lastMemorizedDate: _getDataFromSnapshot(
             snapshot,
-            _updatedDateFieldName,
+            _lastMemorizedDateFieldName,
           ),
-          lastLearnedDate: _getDataFromSnapshot(
+          lastTrainingDate: _getDataFromSnapshot(
             snapshot,
-            _lastLearnedDateFieldName,
+            _lastTrainingDateDateFieldName,
           ),
           userId: _getDataFromSnapshot(
             snapshot,
@@ -70,19 +87,23 @@ class WordDto implements Transformable<Word> {
   final String id;
   final String text;
   final String translation;
-  final int score;
+  final int memoryPoints;
+  final int trainingPoints;
+  final TrainingProgressDto trainingProgress;
   final DateTime createdDate;
-  final DateTime updatedDate;
-  final DateTime lastLearnedDate;
+  final DateTime lastMemorizedDate;
+  final DateTime lastTrainingDate;
   final String userId;
 
   Map<String, Object> get map => {
         _textFieldName: text,
         _translationFieldName: translation,
-        _scoreFieldName: score,
+        _memoryPointsFieldName: memoryPoints,
+        _trainingPointsFieldName: trainingPoints,
+        _trainingProgressFieldName: trainingProgress.map,
         _createdDateFieldName: createdDate,
-        _updatedDateFieldName: updatedDate,
-        _lastLearnedDateFieldName: lastLearnedDate,
+        _lastMemorizedDateFieldName: lastMemorizedDate,
+        _lastTrainingDateDateFieldName: lastTrainingDate,
         _userIdFieldName: userId,
       };
 
@@ -91,10 +112,12 @@ class WordDto implements Transformable<Word> {
         id: id,
         text: text,
         translation: translation,
-        score: score,
+        memoryPoints: memoryPoints,
+        trainingPoints: trainingPoints,
+        trainingProgress: trainingProgress.transform(),
         createdDate: createdDate,
-        updatedDate: updatedDate,
-        lastLearnedDate: lastLearnedDate,
+        lastMemorizedDate: lastMemorizedDate,
+        lastTrainingDate: lastTrainingDate,
         userId: userId,
       );
 }

@@ -50,7 +50,6 @@ class NewWordScreenWm extends BaseWidgetModel {
     await _dictionaryInteractor.addWord(Word(
       text: wordState.text,
       translation: translationState.text,
-      score: 0,
       createdDate: DateTime.now(),
     ));
 

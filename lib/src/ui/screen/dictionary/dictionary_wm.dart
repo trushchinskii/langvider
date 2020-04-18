@@ -32,6 +32,7 @@ class DictionaryScreenWm extends BaseWidgetModel {
   }
 
   Future<void> _loadWords({bool withLoader = true}) async {
+    // TODO whe error occures infinit loading
     if (withLoader) wordsState.loading();
 
     final words = await _dictionaryInteractor.getWords();
