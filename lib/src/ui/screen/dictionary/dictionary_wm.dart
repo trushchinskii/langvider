@@ -4,6 +4,7 @@ import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_screen_route.dart';
+import 'package:pedantic/pedantic.dart';
 
 class DictionaryScreenWm extends BaseWidgetModel {
   DictionaryScreenWm(
@@ -44,8 +45,8 @@ class DictionaryScreenWm extends BaseWidgetModel {
     _loadWords(withLoader: false);
   }
 
-  void _openNewWordScreen() {
-    navigator.push(NewWordScreenRoute());
-    _loadWords(withLoader: false);
+  Future<void> _openNewWordScreen() async {
+    await navigator.push(NewWordScreenRoute());
+    unawaited(_loadWords(withLoader: false));
   }
 }
