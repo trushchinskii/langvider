@@ -16,3 +16,4 @@ const backgroundColor = Color(0xffFFF1CD); // #FFF1CD
 const errorColor = Color(0xffD50000); // #D50000
 
 const reefColor = Color(0xffDDFFA6); // #DDFFA6
+const burntSiennaColor = Color(0xffF2705E); // #F2705E

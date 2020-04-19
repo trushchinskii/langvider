@@ -13,4 +13,9 @@ class GlobalNavigator {
   }) {
     return globalKey.currentState.pushReplacement(newRoute, result: result);
   }
+
+  @optionalTypeArgs
+  bool pop<T extends Object>([T result]) {
+    return globalKey.currentState.pop(result);
+  }
 }

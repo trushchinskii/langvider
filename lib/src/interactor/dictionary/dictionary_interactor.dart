@@ -16,10 +16,11 @@ class DictionaryInteractor {
   Future<void> addWord(Word word) async {
     final User user = await _authInteractor.user;
 
-    return _repository.addWord(
-      word.copy(userId: user.id),
-    );
+    word.userId = user.id;
+    return _repository.addWord(word);
   }
 
   Future<List<Word>> getWords() => _repository.getWords();
+
+  void deleteWord(Word word) => _repository.deleteWord(word);
 }
