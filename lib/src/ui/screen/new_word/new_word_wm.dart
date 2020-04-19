@@ -5,9 +5,7 @@ import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/state_stream.dart';
 import 'package:langvider/src/ui/base/state_management/state/text_state_stream.dart';
 
-// TODO add loadstate for adding and close screen only after complete adding
-// TODO add error handling in wms
-
+// TODO add loadState for adding and close screen only after complete adding
 class NewWordScreenWm extends BaseWidgetModel {
   NewWordScreenWm(
     WmDependencies dependencies,
@@ -53,8 +51,12 @@ class NewWordScreenWm extends BaseWidgetModel {
       translation: translationState.text,
       createdDate: DateTime.now(),
     );
-    await _dictionaryInteractor.addWord(word);
+    try {
+      await _dictionaryInteractor.addWord(word);
 
-    navigator.pop();
+      navigator.pop();
+    } on Exception catch (e) {
+      handleError(e);
+    }
   }
 }

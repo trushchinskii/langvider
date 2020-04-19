@@ -42,7 +42,9 @@ class BaseWidgetModel {
     }
   }
 
-  void handleError(Exception e) {}
+  void handleError(Exception e) {
+    messageController.showSnack(e.toString());
+  }
 }
 
 class WmDependencies {

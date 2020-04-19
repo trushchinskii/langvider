@@ -10,7 +10,7 @@ class DictionaryRepository extends BaseRepository {
         _dictionaryCollectionName,
       );
 
-  Future<List<Word>> getWords() => handleExecute(() async {
+  Future<List<Word>> getWords() => mapErrors(() async {
         final querySnapshot = await _dictionary.getDocuments();
 
         return querySnapshot.documents.map((documentSnapshot) {
@@ -18,13 +18,13 @@ class DictionaryRepository extends BaseRepository {
         }).toList();
       });
 
-  Future<void> addWord(Word word) => handleExecute(() {
+  Future<void> addWord(Word word) => mapErrors(() {
         return _dictionary.add(
           WordDto.fromWord(word).map,
         );
       });
 
-  Future<void> deleteWord(Word word) => handleExecute(() {
+  Future<void> deleteWord(Word word) => mapErrors(() {
         return _dictionary.document(word.id).delete();
       });
 }

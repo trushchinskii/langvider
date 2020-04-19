@@ -90,7 +90,7 @@ class _DictionaryState
 
   Widget _buildErrorState(context, Exception exception) {
     return Center(
-      child: Text(exception.toString()),
+      child: Text(exception.toString()), // TODO implement error
     );
   }
 

@@ -14,7 +14,7 @@ class AuthRepository extends BaseRepository {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User> get user => handleExecute(() async {
+  Future<User> get user => mapErrors(() async {
         final firebaseUser = await _auth.currentUser();
         return UserDto(firebaseUser).transform();
       });
@@ -22,7 +22,7 @@ class AuthRepository extends BaseRepository {
   /// Sign in in google account
   ///
   /// Return [User] if user login and null if doesn't
-  Future<bool> login() => handleExecute(() async {
+  Future<bool> login() => mapErrors(() async {
         final FirebaseUser firebaseUser = await _loginByGoogle();
         return firebaseUser != null;
       });
@@ -44,12 +44,12 @@ class AuthRepository extends BaseRepository {
     return authResult.user;
   }
 
-  Future<bool> get isUserLogin => handleExecute(() async {
+  Future<bool> get isUserLogin => mapErrors(() async {
         final FirebaseUser firebaseUser = await _auth.currentUser();
         return firebaseUser != null;
       });
 
-  Future<void> logout() => handleExecute(() async {
+  Future<void> logout() => mapErrors(() async {
         await _googleSignIn.signOut();
         await _auth.signOut();
       });
