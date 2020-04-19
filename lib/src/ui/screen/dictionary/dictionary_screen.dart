@@ -5,8 +5,7 @@ import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/base/state_management/widget/widget_state_builder.dart';
 import 'package:langvider/src/ui/screen/dictionary/dictionary_wm.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
-
-// TODO add ptr for refreshing
+import 'package:langvider/src/ui/utils/text_styles.dart';
 
 class DictionaryScreen extends BaseWidget {
   @override
@@ -39,22 +38,27 @@ class _DictionaryState
     );
   }
 
-  Widget _buildWords(context, List<Word> words) => ListView.builder(
-        itemCount: words.length,
-        itemBuilder: (_, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 16,
-            ),
-            child: Slidable(
-              actionPane: const SlidableBehindActionPane(),
-              actionExtentRatio: 0.25,
-              child: _buildWord(words[index]),
-              secondaryActions: [_buildDeleteAction(words[index])],
-            ),
-          );
-        },
+  Widget _buildWords(context, List<Word> words) => RefreshIndicator(
+        onRefresh: () => Future(() {
+          wm.loadDataAction();
+        }),
+        child: ListView.builder(
+          itemCount: words.length,
+          itemBuilder: (_, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 16,
+              ),
+              child: Slidable(
+                actionPane: const SlidableBehindActionPane(),
+                actionExtentRatio: 0.25,
+                child: _buildWord(words[index]),
+                secondaryActions: [_buildDeleteAction(words[index])],
+              ),
+            );
+          },
+        ),
       );
 
   Widget _buildWord(Word word) {
@@ -90,7 +94,20 @@ class _DictionaryState
 
   Widget _buildErrorState(context, Exception exception) {
     return Center(
-      child: Text(exception.toString()), // TODO implement error
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            str.dictionaryErrorText,
+            style: errorTextStyle,
+          ),
+          const SizedBox(height: 16),
+          RaisedButton(
+            child: Text(str.dictionaryRepeateText),
+            onPressed: wm.loadDataAction,
+          ),
+        ],
+      ),
     );
   }
 

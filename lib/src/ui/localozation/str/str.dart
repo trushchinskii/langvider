@@ -24,6 +24,8 @@ abstract class Str {
 
   // Dictionary
   String get dictionaryAppBarTitle => 'Словарь';
+  String get dictionaryErrorText => 'Произошла ошибка';
+  String get dictionaryRepeateText => 'Повторить';
 
   // Errors
   String get loginError => 'Произошла ошибка авторизации.\n'

@@ -16,6 +16,7 @@ class DictionaryScreenWm extends BaseWidgetModel {
 
   final wordsState = LoadingStateStream<List<Word>>(LoadingState.content([]));
 
+  final loadDataAction = Action();
   final deleteWordAction = Action<Word>();
   final openNewWordScreenAction = Action();
 
@@ -30,6 +31,7 @@ class DictionaryScreenWm extends BaseWidgetModel {
   void _initListeners() {
     listen(deleteWordAction, _deleteWord);
     listen(openNewWordScreenAction, (_) => _openNewWordScreen());
+    listen(loadDataAction, (_) => _loadWords());
   }
 
   Future<void> _loadWords({bool withLoader = true}) async {

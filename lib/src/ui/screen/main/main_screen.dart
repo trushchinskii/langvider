@@ -4,6 +4,7 @@ import 'package:langvider/src/ui/screen/main/main_wm.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 import 'package:langvider/src/ui/utils/text_styles.dart';
 
+// TODO Add checking for words if exist
 class MainScreen extends BaseWidget {
   @override
   BaseWidgetState buildState() => _MainState();

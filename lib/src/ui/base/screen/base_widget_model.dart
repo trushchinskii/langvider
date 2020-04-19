@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:langvider/src/interactor/common/logger/logger.dart';
 import 'package:langvider/src/ui/base/message_controller/message_controller.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/base/state_management/state/base/streamable.dart';
@@ -44,6 +45,7 @@ class BaseWidgetModel {
 
   void handleError(Exception e) {
     messageController.showSnack(e.toString());
+    log.e(e);
   }
 }
 
