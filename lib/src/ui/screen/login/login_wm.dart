@@ -39,6 +39,8 @@ class LoginScreenWm extends BaseWidgetModel {
         str.loginError,
         type: MessageType.error,
       );
+    } on Exception catch (e) {
+      handleError(e);
     }
   }
 }
