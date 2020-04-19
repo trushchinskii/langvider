@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
-import 'package:langvider/src/ui/base/state_management/widget/widget_state_builder.dart';
+import 'package:langvider/src/ui/base/state_management/widget/widget_stream_builder.dart';
 import 'package:langvider/src/ui/screen/dictionary/dictionary_wm.dart';
 import 'package:langvider/src/ui/utils/colors.dart';
 import 'package:langvider/src/ui/utils/text_styles.dart';
@@ -30,35 +30,37 @@ class _DictionaryState
   }
 
   Widget _buildBody() {
-    return LoadingBuilder<List<Word>>(
-      state: wm.wordsState,
-      builder: _buildWords,
+    return WidgetStreamBuilder<List<Word>>(
+      stream: wm.wordsStream,
+      initialData: const [],
+      builder: (_, words) {
+        if (words.isEmpty) {
+          return _buildEmptyState();
+        } else {
+          return _buildWords(words);
+        }
+      },
       loadingBuilder: _buildLoadingState,
       errorBuilder: _buildErrorState,
     );
   }
 
-  Widget _buildWords(context, List<Word> words) => RefreshIndicator(
-        onRefresh: () => Future(() {
-          wm.loadDataAction();
-        }),
-        child: ListView.builder(
-          itemCount: words.length,
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 16,
-              ),
-              child: Slidable(
-                actionPane: const SlidableBehindActionPane(),
-                actionExtentRatio: 0.25,
-                child: _buildWord(words[index]),
-                secondaryActions: [_buildDeleteAction(words[index])],
-              ),
-            );
-          },
-        ),
+  Widget _buildWords(List<Word> words) => ListView.builder(
+        itemCount: words.length,
+        itemBuilder: (_, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 16,
+            ),
+            child: Slidable(
+              actionPane: const SlidableBehindActionPane(),
+              actionExtentRatio: 0.25,
+              child: _buildWord(words[index]),
+              secondaryActions: [_buildDeleteAction(words[index])],
+            ),
+          );
+        },
       );
 
   Widget _buildWord(Word word) {
@@ -94,19 +96,9 @@ class _DictionaryState
 
   Widget _buildErrorState(context, Exception exception) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            str.dictionaryErrorText,
-            style: errorTextStyle,
-          ),
-          const SizedBox(height: 16),
-          RaisedButton(
-            child: Text(str.dictionaryRepeateText),
-            onPressed: wm.loadDataAction,
-          ),
-        ],
+      child: Text(
+        str.dictionaryErrorText,
+        style: errorTextStyle,
       ),
     );
   }
@@ -119,4 +111,13 @@ class _DictionaryState
           onTap: () => wm.deleteWordAction(word),
         ),
       );
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Text(
+        str.dictionaryEmptyText,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 }

@@ -37,6 +37,7 @@ class BaseWidgetModel {
   }
 
   /// Executed when widget call dispose method
+  @mustCallSuper
   void dispose() {
     for (Streamable stream in _streams) {
       stream.close();

@@ -13,14 +13,14 @@ class DictionaryInteractor {
 
   final AuthInteractor _authInteractor;
 
+  Stream<List<Word>> get wordsStream => _repository.wordsStream;
+
   Future<void> addWord(Word word) async {
     final User user = await _authInteractor.user;
 
     word.userId = user.id;
     return _repository.addWord(word);
   }
-
-  Future<List<Word>> getWords() => _repository.getWords();
 
   void deleteWord(Word word) => _repository.deleteWord(word);
 }
