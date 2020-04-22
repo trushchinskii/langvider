@@ -23,4 +23,6 @@ class DictionaryInteractor {
   }
 
   void deleteWord(Word word) => _repository.deleteWord(word);
+
+  Future<List<Word>> getCachedWords() => _repository.getCachedWords();
 }

@@ -8,7 +8,7 @@ const _translationFieldName = 'translation';
 const _memoryPointsFieldName = 'memoryPoints';
 const _trainingPointsFieldName = 'trainingPoints';
 const _trainingProgressFieldName = 'trainingProgress';
-const _createdDateFieldName = 'createdDate';
+const createdDateFieldName = 'createdDate';
 const _lastMemorizedDateFieldName = 'lastMemorizedDate';
 const _lastTrainingDateDateFieldName = 'lastTrainingDate';
 const _userIdFieldName = 'userId';
@@ -68,7 +68,7 @@ class WordDto implements Transformable<Word> {
           ),
           createdDate: _getDataFromSnapshot(
             snapshot,
-            _createdDateFieldName,
+            createdDateFieldName,
           ),
           lastMemorizedDate: _getDataFromSnapshot(
             snapshot,
@@ -101,7 +101,7 @@ class WordDto implements Transformable<Word> {
         _memoryPointsFieldName: memoryPoints,
         _trainingPointsFieldName: trainingPoints,
         _trainingProgressFieldName: trainingProgress.map,
-        _createdDateFieldName: createdDate,
+        createdDateFieldName: createdDate,
         _lastMemorizedDateFieldName: lastMemorizedDate,
         _lastTrainingDateDateFieldName: lastTrainingDate,
         _userIdFieldName: userId,

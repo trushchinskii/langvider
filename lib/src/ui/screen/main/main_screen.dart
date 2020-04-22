@@ -66,31 +66,57 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
           children: <Widget>[
             const SizedBox(height: 24),
             _buildDictionary(),
+            const SizedBox(height: 16),
+            _buildTrainings(),
           ],
         ),
       );
 
-  Container _buildDictionary() => Container(
-        height: 84,
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: RaisedButton(
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              str.mainScreenDictionaryTitle,
-              style: h5,
-            ),
-          ),
-          padding: const EdgeInsets.only(left: 16, bottom: 8),
-          color: reefColor,
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          onPressed: wm.openDictionaryScreenAction,
-        ),
+  Widget _buildDictionary() => _MainListTile(
+        title: str.mainScreenDictionaryTitle,
+        onPressed: wm.openDictionaryScreenAction,
       );
+  Widget _buildTrainings() => _MainListTile(
+        title: str.mainScreenTrainingsTitle,
+        onPressed: wm.openTrainingsScreenAction,
+      );
+}
+
+class _MainListTile extends StatelessWidget {
+  const _MainListTile({
+    @required this.title,
+    @required this.onPressed,
+    Key key,
+  })  : assert(title != null && onPressed != null),
+        super(key: key);
+
+  final String title;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 84,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: RaisedButton(
+        child: Align(
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            title,
+            style: h5,
+          ),
+        ),
+        padding: const EdgeInsets.only(left: 16, bottom: 8),
+        color: reefColor,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        onPressed: onPressed,
+      ),
+    );
+  }
 }
 
 class _BottomAppBar extends StatelessWidget {

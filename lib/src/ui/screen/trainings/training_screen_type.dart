@@ -1,0 +1,4 @@
+enum TrainingScreenType {
+  textTranslation,
+  translationText,
+}

@@ -12,7 +12,7 @@ class SplashWidget extends StatelessWidget {
         title,
         style: GoogleFonts.pacifico(
           fontWeight: FontWeight.w400,
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 48,
             color: secondaryColor,
           ),
