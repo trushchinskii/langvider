@@ -10,16 +10,6 @@ class DictionaryRepository extends BaseRepository {
         _dictionaryCollectionName,
       );
 
-  Future<void> addWord(Word word) => mapErrors(() {
-        return _dictionary.add(
-          WordDto.fromWord(word).map,
-        );
-      });
-
-  Future<void> deleteWord(Word word) => mapErrors(() {
-        return _dictionary.document(word.id).delete();
-      });
-
   Stream<List<Word>> get wordsStream => mapErrors(() {
         return _dictionary
             .orderBy(createdDateFieldName, descending: true)
@@ -31,6 +21,22 @@ class DictionaryRepository extends BaseRepository {
                 },
               ).toList(),
             );
+      });
+
+  Future<void> addWord(Word word) => mapErrors(() {
+        return _dictionary.add(
+          WordDto.fromWord(word).map,
+        );
+      });
+
+  void updateWord(Word word) {
+    _dictionary.document(word.id).updateData(
+          WordDto.fromWord(word).map,
+        );
+  }
+
+  Future<void> deleteWord(Word word) => mapErrors(() {
+        return _dictionary.document(word.id).delete();
       });
 
   Future<List<Word>> getCachedWords() => mapErrors(() async {

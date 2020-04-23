@@ -77,8 +77,29 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
     final isAnswerCorrect = _trainingManager.isAnswerCorrect(answer.word);
     answer.isCorrect = isAnswerCorrect;
     trainingState.notify();
+    final Word updatedWord = _updateWord(
+      trainingState.value.data.word,
+      isAnswerCorrect,
+    );
+    _dictionaryInteractor.updateWord(updatedWord);
+
     await Future.delayed(_delayBetweenWordsTraining);
+
     _learnNextWord();
+  }
+
+  Word _updateWord(Word word, bool isCorrect) {
+    final int earnedTrainingPoints = isCorrect ? 1 : -1;
+    word
+      ..trainingPoints = word.trainingPoints + earnedTrainingPoints
+      ..lastTrainingDate = DateTime.now();
+
+    if (isCorrect) {
+      word.trainingProgress.progress[_trainingType] =
+          word.trainingProgress.progress[_trainingType] + 1;
+    }
+
+    return word;
   }
 
   void _completeTraining() {
