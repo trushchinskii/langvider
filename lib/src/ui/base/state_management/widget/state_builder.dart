@@ -18,7 +18,7 @@ class StateBuilder<T> extends StatelessWidget {
     return StreamBuilder<T>(
       builder: (context, snapshot) => builder(context, snapshot.data),
       stream: state.stream,
-      initialData: state.initialData,
+      initialData: state.initialData ?? state.value,
     );
   }
 }

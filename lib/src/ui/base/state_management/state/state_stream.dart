@@ -19,8 +19,11 @@ class StateStream<T> implements Streamable<T> {
   T get value => _lastValue;
 
   void accept([T data]) {
+    _lastValue = data;
     _stateStreamController.sink.add(data);
   }
+
+  void notify() => accept(value);
 
   @override
   void close() {

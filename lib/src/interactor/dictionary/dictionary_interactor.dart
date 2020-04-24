@@ -22,5 +22,13 @@ class DictionaryInteractor {
     return _repository.addWord(word);
   }
 
+  void updateWord(Word word) {
+    _repository.updateWord(word);
+  }
+
   void deleteWord(Word word) => _repository.deleteWord(word);
+
+  Future<List<Word>> getCachedWords({bool updateIfEmpty = false}) {
+    return _repository.getCachedWords(updateIfEmpty: updateIfEmpty);
+  }
 }

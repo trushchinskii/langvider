@@ -8,7 +8,7 @@ const _translationFieldName = 'translation';
 const _memoryPointsFieldName = 'memoryPoints';
 const _trainingPointsFieldName = 'trainingPoints';
 const _trainingProgressFieldName = 'trainingProgress';
-const _createdDateFieldName = 'createdDate';
+const createdDateFieldName = 'createdDate';
 const _lastMemorizedDateFieldName = 'lastMemorizedDate';
 const _lastTrainingDateDateFieldName = 'lastTrainingDate';
 const _userIdFieldName = 'userId';
@@ -66,18 +66,18 @@ class WordDto implements Transformable<Word> {
               _trainingProgressFieldName,
             ),
           ),
-          createdDate: _getDataFromSnapshot(
+          createdDate: _getDataFromSnapshot<Timestamp>(
             snapshot,
-            _createdDateFieldName,
-          ),
-          lastMemorizedDate: _getDataFromSnapshot(
+            createdDateFieldName,
+          )?.toDate(),
+          lastMemorizedDate: _getDataFromSnapshot<Timestamp>(
             snapshot,
             _lastMemorizedDateFieldName,
-          ),
-          lastTrainingDate: _getDataFromSnapshot(
+          )?.toDate(),
+          lastTrainingDate: _getDataFromSnapshot<Timestamp>(
             snapshot,
             _lastTrainingDateDateFieldName,
-          ),
+          )?.toDate(),
           userId: _getDataFromSnapshot(
             snapshot,
             _userIdFieldName,
@@ -101,7 +101,7 @@ class WordDto implements Transformable<Word> {
         _memoryPointsFieldName: memoryPoints,
         _trainingPointsFieldName: trainingPoints,
         _trainingProgressFieldName: trainingProgress.map,
-        _createdDateFieldName: createdDate,
+        createdDateFieldName: createdDate,
         _lastMemorizedDateFieldName: lastMemorizedDate,
         _lastTrainingDateDateFieldName: lastTrainingDate,
         _userIdFieldName: userId,
@@ -127,10 +127,14 @@ T _getDataFromSnapshot<T>(
   String fieldName,
 ) {
   final dynamic data = snapshot.data[fieldName];
+  if (data == null) return null;
 
   if (data is T) {
     return data;
   } else {
-    return null;
+    throw Exception(
+      'Parsing WordDto. '
+      'DataType : ${data.runtimeType}, fieldName : $fieldName',
+    );
   }
 }

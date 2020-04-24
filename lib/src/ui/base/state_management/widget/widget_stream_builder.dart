@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:langvider/src/interactor/common/logger/logger.dart';
 
 typedef DataWidgetBuilder<T> = Widget Function(BuildContext, T data);
 typedef ErrorWidgetBuilder = Widget Function(BuildContext, Exception error);
@@ -31,8 +30,6 @@ class WidgetStreamBuilder<T> extends StatelessWidget {
         stream: stream,
         initialData: initialData,
         builder: (context, snapshot) {
-          log.i('${snapshot.connectionState} hasData=${snapshot.hasData}');
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return _buildLoadingState(context);
           } else if (snapshot.hasError) {

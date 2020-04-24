@@ -10,21 +10,52 @@ class DictionaryRepository extends BaseRepository {
         _dictionaryCollectionName,
       );
 
+  Stream<List<Word>> get wordsStream => mapErrors(() {
+        return _dictionary
+            .orderBy(createdDateFieldName, descending: true)
+            .snapshots()
+            .map(
+              (querySnapshot) => querySnapshot.documents.map(
+                (documentSnapshot) {
+                  return WordDto.fromSnapshot(documentSnapshot).transform();
+                },
+              ).toList(),
+            );
+      });
+
   Future<void> addWord(Word word) => mapErrors(() {
         return _dictionary.add(
           WordDto.fromWord(word).map,
         );
       });
 
+  void updateWord(Word word) {
+    _dictionary.document(word.id).updateData(
+          WordDto.fromWord(word).map,
+        );
+  }
+
   Future<void> deleteWord(Word word) => mapErrors(() {
         return _dictionary.document(word.id).delete();
       });
 
-  Stream<List<Word>> get wordsStream => _dictionary.snapshots().map(
-        (querySnapshot) => querySnapshot.documents.map(
-          (documentSnapshot) {
-            return WordDto.fromSnapshot(documentSnapshot).transform();
-          },
-        ).toList(),
-      );
+  Future<List<Word>> getCachedWords({
+    bool updateIfEmpty,
+  }) {
+    return mapErrors(() async {
+      QuerySnapshot querySnapshot = await _dictionary
+          .orderBy(createdDateFieldName, descending: true)
+          .getDocuments(source: Source.cache);
+
+      if (updateIfEmpty && querySnapshot.documents.isEmpty) {
+        querySnapshot = await _dictionary
+            .orderBy(createdDateFieldName, descending: true)
+            .getDocuments(source: Source.server);
+      }
+
+      return querySnapshot.documents.map((documentSnapshot) {
+        return WordDto.fromSnapshot(documentSnapshot).transform();
+      }).toList();
+    });
+  }
 }

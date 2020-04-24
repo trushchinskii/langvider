@@ -5,6 +5,9 @@ abstract class Str {
     return Localizations.of<Str>(context, Str);
   }
 
+  // Common
+  String get repeat => 'Повторить';
+
   // Splash Screen
   String get splashScreenTitle => 'Langvider';
 
@@ -15,6 +18,7 @@ abstract class Str {
 
   // MainScreen
   String get mainScreenDictionaryTitle => 'Словарь';
+  String get mainScreenTrainingsTitle => 'Тренировки';
 
   // New Word
   String get newWordAppBarTitle => 'Новое слово';
@@ -25,8 +29,19 @@ abstract class Str {
   // Dictionary
   String get dictionaryAppBarTitle => 'Словарь';
   String get dictionaryErrorText => 'Произошла ошибка';
-  String get dictionaryRepeatText => 'Повторить';
   String get dictionaryEmptyText => 'Словарь пуст\nДобавьте новые слова';
+
+  // Trainings
+  String get trainingsEmptyStateText =>
+      'Недостаточное количество слов\nдля тренировок';
+  String get trainingsErrorText =>
+      'Произошла ошибка.\nПроверьте соединение с сетью';
+
+  String get trainingsSelectTextTranslationText => 'Выбрать перевод к слову';
+  String get trainingsSelectTranslationTextText => 'Выбрать слово к переводу';
+  String get trainingsSelectCompleteText => 'Готово';
+  String get trainingsWriteTextTranslationText => 'Написать перевод к слову';
+  String get trainingsWriteTranslationTextText => 'Написать слово к переводу';
 
   // Errors
   String get loginError => 'Произошла ошибка авторизации.\n'
