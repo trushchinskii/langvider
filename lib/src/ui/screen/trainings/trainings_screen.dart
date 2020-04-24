@@ -38,20 +38,20 @@ class _TrainingsState
                       TrainingScreenType.translationText,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  _TrainingsListTile(
-                    title: str.trainingsWriteTextTranslationText,
-                    onPressed: () => wm.openWritingTrainingAction(
-                      TrainingScreenType.textTranslation,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _TrainingsListTile(
-                    title: str.trainingsWriteTranslationTextText,
-                    onPressed: () => wm.openWritingTrainingAction(
-                      TrainingScreenType.translationText,
-                    ),
-                  ),
+                  // const SizedBox(height: 16),
+                  // _TrainingsListTile(
+                  //   title: str.trainingsWriteTextTranslationText,
+                  //   onPressed: () => wm.openWritingTrainingAction(
+                  //     TrainingScreenType.textTranslation,
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 16),
+                  // _TrainingsListTile(
+                  //   title: str.trainingsWriteTranslationTextText,
+                  //   onPressed: () => wm.openWritingTrainingAction(
+                  //     TrainingScreenType.translationText,
+                  //   ),
+                  // ),
                 ],
               )
             : _buildEmptyState(),
