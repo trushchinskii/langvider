@@ -39,13 +39,23 @@ class DictionaryRepository extends BaseRepository {
         return _dictionary.document(word.id).delete();
       });
 
-  Future<List<Word>> getCachedWords() => mapErrors(() async {
-        final querySnapshot = await _dictionary
-            .orderBy(createdDateFieldName, descending: true)
-            .getDocuments(source: Source.cache);
+  Future<List<Word>> getCachedWords({
+    bool updateIfEmpty,
+  }) {
+    return mapErrors(() async {
+      QuerySnapshot querySnapshot = await _dictionary
+          .orderBy(createdDateFieldName, descending: true)
+          .getDocuments(source: Source.cache);
 
-        return querySnapshot.documents.map((documentSnapshot) {
-          return WordDto.fromSnapshot(documentSnapshot).transform();
-        }).toList();
-      });
+      if (updateIfEmpty && querySnapshot.documents.isEmpty) {
+        querySnapshot = await _dictionary
+            .orderBy(createdDateFieldName, descending: true)
+            .getDocuments(source: Source.server);
+      }
+
+      return querySnapshot.documents.map((documentSnapshot) {
+        return WordDto.fromSnapshot(documentSnapshot).transform();
+      }).toList();
+    });
+  }
 }

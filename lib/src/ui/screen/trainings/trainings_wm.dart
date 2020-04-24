@@ -46,7 +46,9 @@ class TrainingsScreenWm extends BaseWidgetModel {
     trainingEnablingState.loading();
 
     try {
-      final List<Word> words = await _dictionaryInteractor.getCachedWords();
+      final List<Word> words = await _dictionaryInteractor.getCachedWords(
+        updateIfEmpty: true,
+      );
       trainingEnablingState.content(
         words != null && words.length >= minWordCountForTrainings,
       );
