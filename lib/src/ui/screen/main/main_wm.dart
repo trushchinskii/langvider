@@ -1,5 +1,6 @@
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
+import 'package:langvider/src/ui/screen/debug/debug_screen_route.dart';
 import 'package:langvider/src/ui/screen/dictionary/dictionary_screen_route.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_screen_route.dart';
 import 'package:langvider/src/ui/screen/trainings/trainings_screen_route.dart';
@@ -10,12 +11,14 @@ class MainScreenWm extends BaseWidgetModel {
   final openNewWordScreenAction = Action();
   final openDictionaryScreenAction = Action();
   final openTrainingsScreenAction = Action();
+  final openDebugScreenAction = Action();
 
   @override
   void initListeners() {
     listen(openNewWordScreenAction, (_) => _openNewWordScreen());
     listen(openDictionaryScreenAction, (_) => _openDictionaryScreen());
     listen(openTrainingsScreenAction, (_) => _openTrainingsScreen());
+    listen(openDebugScreenAction, (_) => _openDebugScreen());
   }
 
   void _openNewWordScreen() {
@@ -28,5 +31,9 @@ class MainScreenWm extends BaseWidgetModel {
 
   void _openTrainingsScreen() {
     navigator.push(TrainingsScreenRoute());
+  }
+
+  void _openDebugScreen() {
+    navigator.push(DebugScreenRoute());
   }
 }
