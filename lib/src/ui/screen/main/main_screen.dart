@@ -31,7 +31,7 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: <Widget>[
+        children: const <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
@@ -44,22 +44,17 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
               ),
             ),
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.message),
             title: Text('Messages'),
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.account_circle),
             title: Text('Profile'),
           ),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
-          ),
-          ListTile(
-            leading: Icon(Icons.bug_report),
-            title: const Text('Debug screen'),
-            onTap: wm.openDebugScreenAction,
           ),
         ],
       ),
