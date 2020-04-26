@@ -1,4 +1,3 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:langvider/src/interactor/auth/auth_interactor.dart';
 import 'package:langvider/src/interactor/notification/notification_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';

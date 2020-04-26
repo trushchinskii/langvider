@@ -2,7 +2,7 @@ import 'package:langvider/src/domain/training_data_item.dart';
 import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
-import 'package:langvider/src/interactor/training/training_manager.dart';
+import 'package:langvider/src/interactor/learning/training_manager.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
