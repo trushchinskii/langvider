@@ -5,6 +5,7 @@ import 'package:langvider/src/interactor/common/http/http.dart';
 import 'package:langvider/src/interactor/common/http/implementation/dio_http.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/interactor/dictionary/repository/dictionary_repository.dart';
+import 'package:langvider/src/interactor/notification/notification_interactor.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,9 @@ class AppProvider extends MultiProvider {
                 DictionaryRepository(),
                 ProviderUtils.provide<AuthInteractor>(context),
               ),
+            ),
+            Provider<NotificationInteractor>(
+              create: (_) => NotificationInteractor(),
             ),
           ],
           child: child,
