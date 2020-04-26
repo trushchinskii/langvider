@@ -32,7 +32,7 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
             ),

@@ -9,7 +9,8 @@ const _memoryPointsFieldName = 'memoryPoints';
 const _trainingPointsFieldName = 'trainingPoints';
 const _trainingProgressFieldName = 'trainingProgress';
 const createdDateFieldName = 'createdDate';
-const _lastMemorizedDateFieldName = 'lastMemorizedDate';
+const _lastLearningDateFieldName = 'lastLearningDate';
+const _nextLearningDateFieldName = 'nextLearningDate';
 const _lastTrainingDateDateFieldName = 'lastTrainingDate';
 const _userIdFieldName = 'userId';
 
@@ -22,7 +23,8 @@ class WordDto implements Transformable<Word> {
     this.trainingPoints,
     this.trainingProgress,
     this.createdDate,
-    this.lastMemorizedDate,
+    this.lastLearningDate,
+    this.nextLearningDate,
     this.lastTrainingDate,
     this.userId,
   });
@@ -36,7 +38,8 @@ class WordDto implements Transformable<Word> {
           trainingPoints: word.trainingPoints,
           trainingProgress: TrainingProgressDto(word.trainingProgress),
           createdDate: word.createdDate,
-          lastMemorizedDate: word.lastMemorizedDate,
+          lastLearningDate: word.lastLearningDate,
+          nextLearningDate: word.nextLearningDate,
           lastTrainingDate: word.lastTrainingDate,
           userId: word.userId,
         );
@@ -70,9 +73,13 @@ class WordDto implements Transformable<Word> {
             snapshot,
             createdDateFieldName,
           )?.toDate(),
-          lastMemorizedDate: _getDataFromSnapshot<Timestamp>(
+          lastLearningDate: _getDataFromSnapshot<Timestamp>(
             snapshot,
-            _lastMemorizedDateFieldName,
+            _lastLearningDateFieldName,
+          )?.toDate(),
+          nextLearningDate: _getDataFromSnapshot<Timestamp>(
+            snapshot,
+            _nextLearningDateFieldName,
           )?.toDate(),
           lastTrainingDate: _getDataFromSnapshot<Timestamp>(
             snapshot,
@@ -91,7 +98,8 @@ class WordDto implements Transformable<Word> {
   final int trainingPoints;
   final TrainingProgressDto trainingProgress;
   final DateTime createdDate;
-  final DateTime lastMemorizedDate;
+  final DateTime lastLearningDate;
+  final DateTime nextLearningDate;
   final DateTime lastTrainingDate;
   final String userId;
 
@@ -102,7 +110,8 @@ class WordDto implements Transformable<Word> {
         _trainingPointsFieldName: trainingPoints,
         _trainingProgressFieldName: trainingProgress.map,
         createdDateFieldName: createdDate,
-        _lastMemorizedDateFieldName: lastMemorizedDate,
+        _lastLearningDateFieldName: lastLearningDate,
+        _nextLearningDateFieldName: nextLearningDate,
         _lastTrainingDateDateFieldName: lastTrainingDate,
         _userIdFieldName: userId,
       };
@@ -116,7 +125,8 @@ class WordDto implements Transformable<Word> {
         trainingPoints: trainingPoints,
         trainingProgress: trainingProgress.transform(),
         createdDate: createdDate,
-        lastMemorizedDate: lastMemorizedDate,
+        lastLearningDate: lastLearningDate,
+        nextLearningDate: nextLearningDate,
         lastTrainingDate: lastTrainingDate,
         userId: userId,
       );

@@ -45,10 +45,9 @@ class NewWordScreenWm extends BaseWidgetModel {
   }
 
   void _addWord() {
-    final word = Word(
+    final word = Word.create(
       text: wordState.text,
       translation: translationState.text,
-      createdDate: DateTime.now(),
     );
     try {
       _dictionaryInteractor.addWord(word);
