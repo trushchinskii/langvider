@@ -32,6 +32,8 @@ dependencies:
   flutter_slidable: 0.5.4
 
   flutter_local_notifications: ^1.4.1
+
+  mockito: ^4.1.1
   
 dev_dependencies:
   flutter_test:

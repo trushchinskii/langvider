@@ -52,7 +52,6 @@ linter:
     - avoid_void_async
     - await_only_futures
     - camel_case_extensions
-    - cascade_invocations
     - constant_identifier_names
     - curly_braces_in_flow_control_structures
     - directives_ordering

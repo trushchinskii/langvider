@@ -7,6 +7,7 @@ import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 import 'package:langvider/src/ui/screen/trainings/training_screen_type.dart';
+import 'package:pedantic/pedantic.dart';
 
 const _delayBetweenWordsTraining = Duration(milliseconds: 800);
 
@@ -81,7 +82,7 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
       trainingState.value.data.word,
       isAnswerCorrect,
     );
-    _dictionaryInteractor.updateWord(updatedWord);
+    unawaited(_dictionaryInteractor.updateWord(updatedWord));
 
     await Future.delayed(_delayBetweenWordsTraining);
 
