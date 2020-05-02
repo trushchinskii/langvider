@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/ui/base/screen/base_widget.dart';
 import 'package:langvider/src/ui/base/state_management/widget/loading_builder.dart';
-import 'package:langvider/src/ui/screen/trainings/training_screen_type.dart';
 import 'package:langvider/src/ui/screen/trainings/trainings_wm.dart';
 
 class TrainingsScreen extends BaseWidget {
@@ -28,14 +28,14 @@ class _TrainingsState
                   _TrainingsListTile(
                     title: str.trainingsSelectTextTranslationText,
                     onPressed: () => wm.openSelectingTrainingAction(
-                      TrainingScreenType.textTranslation,
+                      TrainingType.selectTextTranslation,
                     ),
                   ),
                   const SizedBox(height: 16),
                   _TrainingsListTile(
                     title: str.trainingsSelectTranslationTextText,
                     onPressed: () => wm.openSelectingTrainingAction(
-                      TrainingScreenType.translationText,
+                      TrainingType.selectTranslationText,
                     ),
                   ),
                   // const SizedBox(height: 16),

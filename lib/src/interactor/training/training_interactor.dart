@@ -1,47 +1,54 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:langvider/src/domain/training_data_item.dart';
 import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/domain/word.dart';
+import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 
 const wordsCountByTraining = 10;
 const maxAnswersCount = 4;
 
-const _trainingsWithAnswers = [
-  TrainingType.selectTextTranslation,
-  TrainingType.selectTranslationText,
-];
-
 class TrainingInteractor {
   TrainingInteractor(
-    this._trainingType,
-    this._words,
-  ) {
-    _trainingData = _createTrainingData(_words);
+    this._dictionaryInteractor,
+  );
+
+  final DictionaryInteractor _dictionaryInteractor;
+
+  final _random = Random();
+
+  Future<List<TrainingDataItem>> getTrainingData(
+    TrainingType trainingType,
+  ) async {
+    final List<Word> words = await _dictionaryInteractor.getCachedWords(
+      updateIfEmpty: true,
+    );
+    final List<Word> sortedWords = _sortWords(trainingType, words);
+    final List<Word> trainingWords = sortedWords.length > wordsCountByTraining
+        ? sortedWords.sublist(0, wordsCountByTraining)
+        : sortedWords;
+
+    final List<List<Word>> answers = _createAnswers(trainingWords, sortedWords);
+    return List<TrainingDataItem>.generate(
+      trainingWords.length,
+      (index) => TrainingDataItem(trainingWords[index], answers[index]),
+    );
   }
 
-  final TrainingType _trainingType;
-  final List<Word> _words;
-  final random = Random();
-
-  int _currentWordIndex = -1;
-  List<TrainingDataItem> _trainingData;
-
-  TrainingDataItem get _currentTrainingData => _trainingData[_currentWordIndex];
-
-  TrainingDataItem getTrainingDataItem() {
-    _currentWordIndex++;
-    return _trainingData[_currentWordIndex];
-  }
-
-  bool isAnswerCorrect(Object answer) {
+  bool isAnswerCorrect({
+    @required TrainingType trainingType,
+    @required Word word,
+    @required Object answer,
+    bool updateWordOnServer = false,
+  }) {
     bool isCorrect = false;
-    switch (_trainingType) {
+    switch (trainingType) {
       case TrainingType.selectTextTranslation:
         {
           if (answer is Word) {
             isCorrect = compareAnswersString(
-              _currentTrainingData.word.translation,
+              word.translation,
               answer.translation,
             );
           } else {
@@ -53,7 +60,7 @@ class TrainingInteractor {
         {
           if (answer is Word) {
             isCorrect = compareAnswersString(
-              _currentTrainingData.word.text,
+              word.text,
               answer.text,
             );
           } else {
@@ -65,7 +72,7 @@ class TrainingInteractor {
         {
           if (answer is String) {
             isCorrect = compareAnswersString(
-              _currentTrainingData.word.translation,
+              word.translation,
               answer,
             );
           } else {
@@ -77,7 +84,7 @@ class TrainingInteractor {
         {
           if (answer is String) {
             isCorrect = compareAnswersString(
-              _currentTrainingData.word.text,
+              word.text,
               answer,
             );
           } else {
@@ -87,37 +94,32 @@ class TrainingInteractor {
         break;
     }
 
+    if (updateWordOnServer) {
+      final int earnedTrainingPoints = isCorrect ? 1 : -1;
+      word
+        ..trainingPoints = word.trainingPoints + earnedTrainingPoints
+        ..lastTrainingDate = DateTime.now();
+
+      if (isCorrect) {
+        word.trainingProgress.progress[trainingType] =
+            word.trainingProgress.progress[trainingType] + 1;
+      }
+
+      _dictionaryInteractor.updateWord(word);
+    }
+
     return isCorrect;
   }
 
-  bool isTrainingComplete() {
-    final bool isComplete = _currentWordIndex == _trainingData.length - 1;
-    return isComplete;
-  }
-
-  List<TrainingDataItem> _createTrainingData(List<Word> _words) {
-    final List<Word> words = _sortWords(_words);
-    final List<Word> trainingWords = words.length > wordsCountByTraining
-        ? words.sublist(0, wordsCountByTraining)
-        : words;
-
-    if (_trainingsWithAnswers.contains(_trainingType)) {
-      final List<List<Word>> answers = _createAnswers(trainingWords, words);
-      return List<TrainingDataItem>.generate(
-        trainingWords.length,
-        (index) => TrainingDataItem(trainingWords[index], answers[index]),
-      );
-    } else {
-      return trainingWords.map((word) => TrainingDataItem(word)).toList();
-    }
-  }
-
-  List<Word> _sortWords(List<Word> _words) {
+  List<Word> _sortWords(
+    TrainingType trainingType,
+    List<Word> _words,
+  ) {
     _words.sort((firstWord, secondWord) {
       final int firstTrainingProgress =
-          firstWord.trainingProgress.progress[_trainingType];
+          firstWord.trainingProgress.progress[trainingType];
       final int secondTrainingProgress =
-          secondWord.trainingProgress.progress[_trainingType];
+          secondWord.trainingProgress.progress[trainingType];
 
       if (firstTrainingProgress > secondTrainingProgress) {
         return 1;
@@ -169,7 +171,7 @@ class TrainingInteractor {
   }
 
   Word _getRandomWord(List<Word> existedWords, List<Word> words) {
-    final index = random.nextInt(words.length);
+    final index = _random.nextInt(words.length);
     final word = words[index];
 
     if (existedWords.contains(word)) {

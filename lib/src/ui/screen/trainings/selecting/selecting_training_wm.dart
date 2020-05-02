@@ -1,47 +1,36 @@
 import 'package:langvider/src/domain/training_data_item.dart';
 import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/domain/word.dart';
-import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
+import 'package:langvider/src/interactor/common/logger/logger.dart';
 import 'package:langvider/src/interactor/training/training_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
-import 'package:langvider/src/ui/screen/trainings/training_screen_type.dart';
-import 'package:pedantic/pedantic.dart';
+import 'package:langvider/src/ui/screen/trainings/model/training_ui_data.dart';
 
 const _delayBetweenWordsTraining = Duration(milliseconds: 800);
 
 class SelectingTrainingScreenWm extends BaseWidgetModel {
   SelectingTrainingScreenWm(
     WmDependencies dependencies,
-    this._screenType,
-    this._dictionaryInteractor,
+    this._trainingType,
+    this._trainingInteractor,
   ) : super(dependencies);
 
-  final TrainingScreenType _screenType;
-  final DictionaryInteractor _dictionaryInteractor;
-  TrainingInteractor _trainingInteractor;
+  final TrainingType _trainingType;
+  final _trainingUiData = <TrainingUiDataItem>[];
+  final TrainingInteractor _trainingInteractor;
 
-  final trainingState = LoadingStateStream<SelectingTrainingData>(
+  final trainingUiDataItemState = LoadingStateStream<TrainingUiDataItem>(
     LoadingState.loading(),
   );
 
-  final answerAction = Action<SelectingAnswer>();
+  final answerAction = Action<Word>();
   final completeAction = Action();
 
-  TrainingType get _trainingType {
-    switch (_screenType) {
-      case TrainingScreenType.textTranslation:
-        return TrainingType.selectTextTranslation;
-      case TrainingScreenType.translationText:
-        return TrainingType.selectTranslationText;
-    }
-    throw Exception('Unknown type $_screenType');
-  }
-
   @override
-  Future<void> onAttached() async {
-    await _prepareTraining();
+  void onAttached() {
+    _loadTrainingData();
   }
 
   @override
@@ -50,92 +39,81 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
     listen(completeAction, (_) => _completeTraining());
   }
 
-  Future<void> _prepareTraining() async {
-    try {
-      final List<Word> words = await _dictionaryInteractor.getCachedWords();
-      _trainingInteractor = TrainingInteractor(_trainingType, words);
+  Future<void> _loadTrainingData() async {
+    trainingUiDataItemState.loading();
 
-      _learnNextWord();
+    final List<TrainingUiDataItem> _uiData = await _getTrainingWords();
+    _trainingUiData.clear();
+    _trainingUiData.addAll(_uiData);
+
+    _nextTrainingUiDataItem();
+  }
+
+  Future<List<TrainingUiDataItem>> _getTrainingWords() async {
+    try {
+      final List<TrainingDataItem> trainingData =
+          await _trainingInteractor.getTrainingData(_trainingType);
+
+      return trainingData.map(
+        (data) {
+          return TrainingUiDataItem(
+            _trainingType,
+            TrainingUiDataItemStatus.inProgress,
+            data,
+          );
+        },
+      ).toList()
+        ..add(TrainingUiDataItem.completed(_trainingType));
     } on Exception catch (e) {
       handleError(e);
     }
+
+    return [];
   }
 
-  void _learnNextWord() {
-    if (_trainingInteractor.isTrainingComplete()) {
-      trainingState.accept(
-        LoadingState.content(SelectingTrainingData.complete()),
-      );
+  void _nextTrainingUiDataItem() {
+    if (_trainingUiData.isEmpty) {
+      log.e('TrainingUiData is empty for training $_trainingType');
+      return;
+    }
+
+    final lastData = trainingUiDataItemState.value;
+    if (trainingUiDataItemState.value?.data == null) {
+      trainingUiDataItemState.accept(LoadingState.content(_trainingUiData[0]));
+    } else if (lastData.data.status == TrainingUiDataItemStatus.complete) {
+      log.e('Training $_trainingType already completed');
+      return;
     } else {
-      final trainingData = _trainingInteractor.getTrainingDataItem();
-      trainingState.accept(
-        LoadingState.content(SelectingTrainingData(trainingData)),
+      final int lastIndex = _trainingUiData.indexWhere((data) {
+        return data.data.word.id == lastData.data.data.word.id;
+      });
+      trainingUiDataItemState.accept(
+        LoadingState.content(_trainingUiData[lastIndex + 1]),
       );
     }
   }
 
-  Future<void> _checkAnswer(SelectingAnswer answer) async {
-    final isAnswerCorrect = _trainingInteractor.isAnswerCorrect(answer.word);
-    answer.isCorrect = isAnswerCorrect;
-    trainingState.notify();
-    final Word updatedWord = _updateWord(
-      trainingState.value.data.word,
-      isAnswerCorrect,
+  Future<void> _checkAnswer(Word answer) async {
+    final isAnswerCorrect = _trainingInteractor.isAnswerCorrect(
+      trainingType: _trainingType,
+      word: trainingUiDataItemState.value.data.data.word,
+      answer: answer,
+      updateWordOnServer: true,
     );
-    unawaited(_dictionaryInteractor.updateWord(updatedWord));
+    trainingUiDataItemState.accept(
+      LoadingState.content(
+        trainingUiDataItemState.value.data.copy(
+          isAnswerCorrect: isAnswerCorrect,
+        ),
+      ),
+    );
 
     await Future.delayed(_delayBetweenWordsTraining);
 
-    _learnNextWord();
-  }
-
-  Word _updateWord(Word word, bool isCorrect) {
-    final int earnedTrainingPoints = isCorrect ? 1 : -1;
-    word
-      ..trainingPoints = word.trainingPoints + earnedTrainingPoints
-      ..lastTrainingDate = DateTime.now();
-
-    if (isCorrect) {
-      word.trainingProgress.progress[_trainingType] =
-          word.trainingProgress.progress[_trainingType] + 1;
-    }
-
-    return word;
+    _nextTrainingUiDataItem();
   }
 
   void _completeTraining() {
     navigator.pop();
   }
-}
-
-class SelectingTrainingData {
-  SelectingTrainingData(TrainingDataItem trainingDataItem)
-      : word = trainingDataItem?.word,
-        answers = _createAnswers(trainingDataItem?.answers),
-        type = trainingDataItem != null
-            ? SelectingTrainingDataType.word
-            : SelectingTrainingDataType.complete;
-
-  SelectingTrainingData.complete() : this(null);
-
-  final Word word;
-  final List<SelectingAnswer> answers;
-  final SelectingTrainingDataType type;
-
-  static List<SelectingAnswer> _createAnswers(List<Word> words) {
-    if (words == null) return null;
-    return words.map((word) => SelectingAnswer(word)).toList();
-  }
-}
-
-enum SelectingTrainingDataType {
-  word,
-  complete,
-}
-
-class SelectingAnswer {
-  SelectingAnswer(this.word);
-
-  final Word word;
-  bool isCorrect;
 }
