@@ -2,7 +2,7 @@ import 'package:langvider/src/domain/training_data_item.dart';
 import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
-import 'package:langvider/src/interactor/learning/manager/training_manager.dart';
+import 'package:langvider/src/interactor/training/training_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
@@ -20,7 +20,7 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
 
   final TrainingScreenType _screenType;
   final DictionaryInteractor _dictionaryInteractor;
-  TrainingManager _trainingManager;
+  TrainingInteractor _trainingInteractor;
 
   final trainingState = LoadingStateStream<SelectingTrainingData>(
     LoadingState.loading(),
@@ -53,7 +53,7 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
   Future<void> _prepareTraining() async {
     try {
       final List<Word> words = await _dictionaryInteractor.getCachedWords();
-      _trainingManager = TrainingManager(_trainingType, words);
+      _trainingInteractor = TrainingInteractor(_trainingType, words);
 
       _learnNextWord();
     } on Exception catch (e) {
@@ -62,12 +62,12 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
   }
 
   void _learnNextWord() {
-    if (_trainingManager.isTrainingComplete()) {
+    if (_trainingInteractor.isTrainingComplete()) {
       trainingState.accept(
         LoadingState.content(SelectingTrainingData.complete()),
       );
     } else {
-      final trainingData = _trainingManager.getTrainingDataItem();
+      final trainingData = _trainingInteractor.getTrainingDataItem();
       trainingState.accept(
         LoadingState.content(SelectingTrainingData(trainingData)),
       );
@@ -75,7 +75,7 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
   }
 
   Future<void> _checkAnswer(SelectingAnswer answer) async {
-    final isAnswerCorrect = _trainingManager.isAnswerCorrect(answer.word);
+    final isAnswerCorrect = _trainingInteractor.isAnswerCorrect(answer.word);
     answer.isCorrect = isAnswerCorrect;
     trainingState.notify();
     final Word updatedWord = _updateWord(

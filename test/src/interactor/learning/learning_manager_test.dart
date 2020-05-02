@@ -1,18 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
-import 'package:langvider/src/interactor/learning/manager/learning_manager.dart';
+import 'package:langvider/src/interactor/learning/learning_interactor.dart';
+import 'package:langvider/src/interactor/notification/notification_interactor.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../mocks.dart';
 
 void main() {
   DictionaryInteractor dictionaryInteractorMock;
-  LearningManager learningManager;
+  NotificationInteractor notificationInteractorMock;
+  LearningInteractor learningManager;
 
   setUp(() {
     dictionaryInteractorMock = DictionaryInteractorMock();
-    learningManager = LearningManager(dictionaryInteractorMock);
+    learningManager = LearningInteractor(
+      dictionaryInteractorMock,
+      notificationInteractorMock,
+    );
   });
   group('LearningManager.getLearningWords() test', () {
     test('Test empty words list', () async {

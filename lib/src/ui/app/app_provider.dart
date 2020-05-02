@@ -6,7 +6,6 @@ import 'package:langvider/src/interactor/common/http/implementation/dio_http.dar
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/interactor/dictionary/repository/dictionary_repository.dart';
 import 'package:langvider/src/interactor/learning/learning_interactor.dart';
-import 'package:langvider/src/interactor/learning/manager/learning_manager.dart';
 import 'package:langvider/src/interactor/notification/notification_interactor.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
@@ -36,14 +35,9 @@ class AppProvider extends MultiProvider {
             Provider<NotificationInteractor>(
               create: (_) => NotificationInteractor(),
             ),
-            Provider<LearningManager>(
-              create: (context) => LearningManager(
-                ProviderUtils.provide<DictionaryInteractor>(context),
-              ),
-            ),
             Provider<LearningInteractor>(
               create: (context) => LearningInteractor(
-                ProviderUtils.provide<LearningManager>(context),
+                ProviderUtils.provide<DictionaryInteractor>(context),
                 ProviderUtils.provide<NotificationInteractor>(context),
               ),
             ),

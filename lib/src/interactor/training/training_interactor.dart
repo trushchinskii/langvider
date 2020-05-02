@@ -12,8 +12,8 @@ const _trainingsWithAnswers = [
   TrainingType.selectTranslationText,
 ];
 
-class TrainingManager {
-  TrainingManager(
+class TrainingInteractor {
+  TrainingInteractor(
     this._trainingType,
     this._words,
   ) {
