@@ -17,8 +17,11 @@ abstract class Str {
   String get loginTooltip => 'Войдите в учётную запись';
 
   // MainScreen
+  String get mainScreenLearningWordsTitle => 'Повторите слова';
   String get mainScreenDictionaryTitle => 'Словарь';
   String get mainScreenTrainingsTitle => 'Тренировки';
+  String get mainScreenHasNotLearningWordsText =>
+      'Нет доступных слов для изучения';
 
   // New Word
   String get newWordAppBarTitle => 'Новое слово';

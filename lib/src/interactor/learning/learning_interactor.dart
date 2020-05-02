@@ -15,6 +15,8 @@ class LearningInteractor {
   final LearningManager _learningManager;
   final NotificationInteractor _notificationInteractor;
 
+  Future<bool> get hasLearningWords => _learningManager.hasLearningWords;
+
   Future<void> scheduleNextLearningNotification() async {
     final nextLearningDate = await _learningManager.getNextLearningDate();
 
