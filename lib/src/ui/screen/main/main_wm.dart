@@ -4,8 +4,10 @@ import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 import 'package:langvider/src/ui/screen/debug/debug_screen_route.dart';
 import 'package:langvider/src/ui/screen/dictionary/dictionary_screen_route.dart';
+import 'package:langvider/src/ui/screen/learning/learning_screen_route.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_screen_route.dart';
 import 'package:langvider/src/ui/screen/trainings/trainings_screen_route.dart';
+import 'package:pedantic/pedantic.dart';
 
 class MainScreenWm extends BaseWidgetModel {
   MainScreenWm(
@@ -17,7 +19,9 @@ class MainScreenWm extends BaseWidgetModel {
 
   final LearningInteractor _learningInteractor;
 
-  final learningWordsState = LoadingStateStream<bool>(LoadingState.loading());
+  final learningDateState = LoadingStateStream<DateTime>(
+    LoadingState.loading(),
+  );
 
   final openNewWordScreenAction = Action();
   final openDictionaryScreenAction = Action();
@@ -34,35 +38,43 @@ class MainScreenWm extends BaseWidgetModel {
     listen(openDebugScreenAction, (_) => _openDebugScreen());
   }
 
-  void _openNewWordScreen() {
-    navigator.push(NewWordScreenRoute());
+  Future<void> loadLearningWords() async {
+    try {
+      learningDateState.loading();
+
+      final hasLearningWords = await _learningInteractor.hasLearningWords;
+      if (hasLearningWords) {
+        learningDateState.content(DateTime.now());
+      } else {
+        final DateTime nextLearningDate =
+            await _learningInteractor.getNextLearningDate();
+        learningDateState.content(nextLearningDate);
+      }
+    } on Exception catch (e) {
+      handleError(e);
+    }
   }
 
-  void _openDictionaryScreen() {
-    navigator.push(DictionaryScreenRoute());
+  Future<void> _openNewWordScreen() async {
+    await navigator.push(NewWordScreenRoute());
+    unawaited(loadLearningWords());
+  }
+
+  Future<void> _openDictionaryScreen() async {
+    await navigator.push(DictionaryScreenRoute());
+    unawaited(loadLearningWords());
   }
 
   void _openTrainingsScreen() {
     navigator.push(TrainingsScreenRoute());
   }
 
-  void _openLearningWordsScreen() {
-    // TODO open learningWords screen
+  Future<void> _openLearningWordsScreen() async {
+    await navigator.push(LearningScreenRoute());
+    unawaited(loadLearningWords());
   }
 
   void _openDebugScreen() {
     navigator.push(DebugScreenRoute());
-  }
-
-  Future<void> loadLearningWords() async {
-    try {
-      learningWordsState.loading();
-
-      final hasLearningWords = await _learningInteractor.hasLearningWords;
-
-      learningWordsState.content(hasLearningWords);
-    } on Exception catch (e) {
-      handleError(e);
-    }
   }
 }

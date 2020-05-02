@@ -20,8 +20,8 @@ abstract class Str {
   String get mainScreenLearningWordsTitle => 'Повторите слова';
   String get mainScreenDictionaryTitle => 'Словарь';
   String get mainScreenTrainingsTitle => 'Тренировки';
-  String get mainScreenHasNotLearningWordsText =>
-      'Нет доступных слов для изучения';
+  String get mainScreenHasNotLearningWordsText => 'Добавьте слова в словарь';
+  String get mainScreenNotNowLearningWordsText => 'Сделующее повторение в ';
 
   // New Word
   String get newWordAppBarTitle => 'Новое слово';

@@ -8,7 +8,7 @@ import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 import 'package:langvider/src/ui/screen/trainings/model/training_ui_data.dart';
 
-const _delayBetweenWordsTraining = Duration(milliseconds: 800);
+const delayBetweenWordsTraining = Duration(milliseconds: 800);
 
 class SelectingTrainingScreenWm extends BaseWidgetModel {
   SelectingTrainingScreenWm(
@@ -108,7 +108,7 @@ class SelectingTrainingScreenWm extends BaseWidgetModel {
       ),
     );
 
-    await Future.delayed(_delayBetweenWordsTraining);
+    await Future.delayed(delayBetweenWordsTraining);
 
     _nextTrainingUiDataItem();
   }

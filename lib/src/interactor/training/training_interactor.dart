@@ -29,7 +29,8 @@ class TrainingInteractor {
         ? sortedWords.sublist(0, wordsCountByTraining)
         : sortedWords;
 
-    final List<List<Word>> answers = _createAnswers(trainingWords, sortedWords);
+    final List<List<Word>> answers = createAnswers(trainingWords, sortedWords);
+
     return List<TrainingDataItem>.generate(
       trainingWords.length,
       (index) => TrainingDataItem(trainingWords[index], answers[index]),
@@ -47,7 +48,7 @@ class TrainingInteractor {
       case TrainingType.selectTextTranslation:
         {
           if (answer is Word) {
-            isCorrect = compareAnswersString(
+            isCorrect = _compareAnswersString(
               word.translation,
               answer.translation,
             );
@@ -59,7 +60,7 @@ class TrainingInteractor {
       case TrainingType.selectTranslationText:
         {
           if (answer is Word) {
-            isCorrect = compareAnswersString(
+            isCorrect = _compareAnswersString(
               word.text,
               answer.text,
             );
@@ -71,7 +72,7 @@ class TrainingInteractor {
       case TrainingType.writeTextTranslation:
         {
           if (answer is String) {
-            isCorrect = compareAnswersString(
+            isCorrect = _compareAnswersString(
               word.translation,
               answer,
             );
@@ -83,7 +84,7 @@ class TrainingInteractor {
       case TrainingType.writeTranslationText:
         {
           if (answer is String) {
-            isCorrect = compareAnswersString(
+            isCorrect = _compareAnswersString(
               word.text,
               answer,
             );
@@ -109,6 +110,38 @@ class TrainingInteractor {
     }
 
     return isCorrect;
+  }
+
+  List<List<Word>> createAnswers(
+    List<Word> words,
+    List<Word> allWords,
+  ) {
+    final List<List<Word>> result = [];
+
+    for (Word word in words) {
+      final answers = <Word>[word];
+      final answerCount =
+          words.length > maxAnswersCount ? maxAnswersCount : words.length;
+
+      for (int i = 1; i < answerCount; i++) {
+        answers.add(_getRandomWord(answers, allWords));
+      }
+
+      result.add(answers);
+    }
+
+    return result;
+  }
+
+  Word _getRandomWord(List<Word> existedWords, List<Word> allWords) {
+    final index = _random.nextInt(allWords.length);
+    final word = allWords[index];
+
+    if (existedWords.contains(word)) {
+      return _getRandomWord(existedWords, allWords);
+    } else {
+      return word;
+    }
   }
 
   List<Word> _sortWords(
@@ -148,40 +181,7 @@ class TrainingInteractor {
     return _words;
   }
 
-  List<List<Word>> _createAnswers(
-    List<Word> trainingWords,
-    List<Word> words,
-  ) {
-    final List<List<Word>> result = [];
-
-    for (var trainingWord in trainingWords) {
-      final answers = <Word>[trainingWord];
-      final answerCount = trainingWords.length > maxAnswersCount
-          ? maxAnswersCount
-          : trainingWords.length;
-
-      for (int i = 1; i < answerCount; i++) {
-        answers.add(_getRandomWord(answers, words));
-      }
-
-      result.add(answers);
-    }
-
-    return result;
-  }
-
-  Word _getRandomWord(List<Word> existedWords, List<Word> words) {
-    final index = _random.nextInt(words.length);
-    final word = words[index];
-
-    if (existedWords.contains(word)) {
-      return _getRandomWord(words, existedWords);
-    } else {
-      return word;
-    }
-  }
-
-  bool compareAnswersString(String str1, String str2) {
+  bool _compareAnswersString(String str1, String str2) {
     return str1.toLowerCase().trim() == str2.toLowerCase().trim();
   }
 }

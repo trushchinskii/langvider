@@ -17,6 +17,7 @@ void main() {
     learningManager = LearningInteractor(
       dictionaryInteractorMock,
       notificationInteractorMock,
+      null,
     );
   });
   group('LearningManager.getLearningWords() test', () {

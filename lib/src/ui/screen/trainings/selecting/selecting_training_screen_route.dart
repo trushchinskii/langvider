@@ -12,7 +12,7 @@ class SelectingTrainingScreenRoute extends MaterialPageRoute<void> {
       : super(
           builder: (context) => _SelectingTrainingScreenProvider(
             trainingType: trainingType,
-            child: SelectingTrainingScreen(screenType: trainingType),
+            child: SelectingTrainingScreen(),
           ),
         );
 }

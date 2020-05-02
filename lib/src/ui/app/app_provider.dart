@@ -36,15 +36,16 @@ class AppProvider extends MultiProvider {
             Provider<NotificationInteractor>(
               create: (_) => NotificationInteractor(),
             ),
+            Provider<TrainingInteractor>(
+              create: (context) => TrainingInteractor(
+                ProviderUtils.provide<DictionaryInteractor>(context),
+              ),
+            ),
             Provider<LearningInteractor>(
               create: (context) => LearningInteractor(
                 ProviderUtils.provide<DictionaryInteractor>(context),
                 ProviderUtils.provide<NotificationInteractor>(context),
-              ),
-            ),
-            Provider<TrainingInteractor>(
-              create: (context) => TrainingInteractor(
-                ProviderUtils.provide<DictionaryInteractor>(context),
+                ProviderUtils.provide<TrainingInteractor>(context),
               ),
             ),
           ],

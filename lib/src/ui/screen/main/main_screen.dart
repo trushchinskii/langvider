@@ -84,16 +84,26 @@ class _MainState extends BaseWidgetState<MainScreen, MainScreenWm> {
 
   Widget _buildLearningWords() => SizedBox(
         height: _mainListTileHeight,
-        child: LoadingBuilder<bool>(
-          state: wm.learningWordsState,
+        child: LoadingBuilder<DateTime>(
+          state: wm.learningDateState,
           loadingBuilder: _buildLearningWordsLoadingState,
           errorBuilder: _buildLearningWordsErrorState,
-          builder: (_, hasLearningWords) => hasLearningWords
-              ? _MainListTile(
-                  title: str.mainScreenLearningWordsTitle,
-                  onPressed: wm.openLearningWordsScreenAction,
-                )
-              : Text(str.mainScreenHasNotLearningWordsText),
+          builder: (_, learnDate) {
+            if (learnDate == null) {
+              return Text(str.mainScreenHasNotLearningWordsText);
+            } else if (learnDate.isBefore(DateTime.now())) {
+              return _MainListTile(
+                title: str.mainScreenLearningWordsTitle,
+                onPressed: wm.openLearningWordsScreenAction,
+              );
+            } else {
+              return Text(
+                '${str.mainScreenNotNowLearningWordsText} '
+                '${learnDate.day}.${learnDate.month}.${learnDate.year} '
+                '${learnDate.hour}:${learnDate.minute}',
+              );
+            }
+          },
         ),
       );
 

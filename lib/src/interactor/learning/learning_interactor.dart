@@ -1,7 +1,9 @@
+import 'package:langvider/src/domain/training_data_item.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/common/logger/logger.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/interactor/notification/notification_interactor.dart';
+import 'package:langvider/src/interactor/training/training_interactor.dart';
 
 const _repeatPeriods = {
   0: Duration(seconds: 0),
@@ -29,10 +31,12 @@ class LearningInteractor {
   LearningInteractor(
     this._dictionaryInteractor,
     this._notificationInteractor,
+    this._trainingInteractor,
   );
 
   final DictionaryInteractor _dictionaryInteractor;
   final NotificationInteractor _notificationInteractor;
+  final TrainingInteractor _trainingInteractor;
 
   Future<bool> get hasLearningWords async {
     final List<Word> words = await getLearningWords();
@@ -104,6 +108,24 @@ class LearningInteractor {
         date: nextLearningDate,
       );
     }
+  }
+
+  Future<List<TrainingDataItem>> getTrainingUiData() async {
+    final List<Word> allWords = await _dictionaryInteractor.getCachedWords(
+      updateIfEmpty: true,
+    );
+
+    final List<Word> learningWord = await getLearningWords();
+
+    final List<List<Word>> answers = _trainingInteractor.createAnswers(
+      learningWord,
+      allWords,
+    );
+
+    return List<TrainingDataItem>.generate(
+      learningWord.length,
+      (index) => TrainingDataItem(learningWord[index], answers[index]),
+    );
   }
 
   List<Word> _calculateLearningWords(List<Word> words) {
