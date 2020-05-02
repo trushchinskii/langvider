@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
+import 'package:langvider/src/interactor/learning/learning_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_screen.dart';
 import 'package:langvider/src/ui/screen/new_word/new_word_wm.dart';
@@ -22,6 +23,7 @@ class _NewWordScreenProvider extends Provider<NewWordScreenWm> {
           create: (context) => NewWordScreenWm(
             WmDependencies(context, GlobalKey()),
             ProviderUtils.provide<DictionaryInteractor>(context),
+            ProviderUtils.provide<LearningInteractor>(context),
           ),
           child: child,
         );

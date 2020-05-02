@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
-import 'package:langvider/src/interactor/learning/learning_manager.dart';
+import 'package:langvider/src/interactor/learning/manager/learning_manager.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../mocks.dart';

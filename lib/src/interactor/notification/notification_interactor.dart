@@ -5,6 +5,7 @@ import 'package:langvider/src/interactor/common/logger/logger.dart';
 class NotificationInteractor {
   final _notificationPlugin = FlutterLocalNotificationsPlugin();
 
+  /// Executed on splash screen
   Future<bool> initialize() async {
     const androidSettings = AndroidInitializationSettings(
       'ic_notification',

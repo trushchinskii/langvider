@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langvider/src/interactor/auth/auth_interactor.dart';
+import 'package:langvider/src/interactor/learning/learning_interactor.dart';
 import 'package:langvider/src/interactor/notification/notification_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/screen/splash/splash_wm.dart';
@@ -30,6 +31,7 @@ class _SplashScreenProvider extends Provider<SplashScreenWm> {
               WmDependencies(context, GlobalKey()),
               ProviderUtils.provide<AuthInteractor>(context),
               ProviderUtils.provide<NotificationInteractor>(context),
+              ProviderUtils.provide<LearningInteractor>(context),
             );
           },
           child: child,
