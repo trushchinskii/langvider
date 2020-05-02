@@ -10,12 +10,23 @@ class Word {
     this.trainingPoints = 0,
     this.trainingProgress = const TrainingProgress.empty(),
     this.createdDate,
-    this.lastMemorizedDate,
+    this.lastLearningDate,
+    this.nextLearningDate,
     this.lastTrainingDate,
     this.userId,
   })  : assert(text != null && text.isNotEmpty),
         assert(translation != null && translation.isNotEmpty),
         assert(memoryPoints != null);
+
+  Word.create({
+    @required String text,
+    @required String translation,
+  }) : this(
+          text: text,
+          translation: translation,
+          createdDate: DateTime.now(),
+          nextLearningDate: DateTime.now(),
+        );
 
   final String id;
   String text;
@@ -24,7 +35,8 @@ class Word {
   int trainingPoints;
   final TrainingProgress trainingProgress;
   final DateTime createdDate;
-  DateTime lastMemorizedDate;
+  DateTime lastLearningDate;
+  DateTime nextLearningDate;
   DateTime lastTrainingDate;
   String userId;
 
@@ -37,7 +49,8 @@ class Word {
         'trainingPoints': trainingPoints,
         'trainingProgress': trainingProgress,
         'createdDate': createdDate,
-        'lastMemorizedDate': lastMemorizedDate,
+        'lastLearningDate': lastLearningDate,
+        'nextLearningDate': nextLearningDate,
         'lastTrainingDate': lastTrainingDate,
         'userId': userId,
       }.toString();

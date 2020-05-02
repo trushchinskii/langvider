@@ -29,11 +29,11 @@ class DictionaryRepository extends BaseRepository {
         );
       });
 
-  void updateWord(Word word) {
-    _dictionary.document(word.id).updateData(
-          WordDto.fromWord(word).map,
-        );
-  }
+  Future<void> updateWord(Word word) => mapErrors(() {
+        return _dictionary.document(word.id).updateData(
+              WordDto.fromWord(word).map,
+            );
+      });
 
   Future<void> deleteWord(Word word) => mapErrors(() {
         return _dictionary.document(word.id).delete();

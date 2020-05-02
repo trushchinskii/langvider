@@ -22,9 +22,7 @@ class DictionaryInteractor {
     return _repository.addWord(word);
   }
 
-  void updateWord(Word word) {
-    _repository.updateWord(word);
-  }
+  Future<void> updateWord(Word word) => _repository.updateWord(word);
 
   void deleteWord(Word word) => _repository.deleteWord(word);
 

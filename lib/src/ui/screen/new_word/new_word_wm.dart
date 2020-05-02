@@ -1,5 +1,6 @@
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
+import 'package:langvider/src/interactor/learning/learning_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/state_stream.dart';
@@ -9,9 +10,11 @@ class NewWordScreenWm extends BaseWidgetModel {
   NewWordScreenWm(
     WmDependencies dependencies,
     this._dictionaryInteractor,
+    this._learningInteractor,
   ) : super(dependencies);
 
   final DictionaryInteractor _dictionaryInteractor;
+  final LearningInteractor _learningInteractor;
 
   final wordState = TextStream();
   final translationState = TextStream();
@@ -45,14 +48,15 @@ class NewWordScreenWm extends BaseWidgetModel {
   }
 
   void _addWord() {
-    final word = Word(
+    final word = Word.create(
       text: wordState.text,
       translation: translationState.text,
-      createdDate: DateTime.now(),
     );
     try {
       _dictionaryInteractor.addWord(word);
-
+      
+      _learningInteractor.scheduleNextLearningNotification();
+      
       navigator.pop();
     } on Exception catch (e) {
       handleError(e);

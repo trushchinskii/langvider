@@ -5,6 +5,9 @@ import 'package:langvider/src/interactor/common/http/http.dart';
 import 'package:langvider/src/interactor/common/http/implementation/dio_http.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/interactor/dictionary/repository/dictionary_repository.dart';
+import 'package:langvider/src/interactor/learning/learning_interactor.dart';
+import 'package:langvider/src/interactor/notification/notification_interactor.dart';
+import 'package:langvider/src/interactor/training/training_interactor.dart';
 import 'package:langvider/src/ui/base/navigator/global_navigator.dart';
 import 'package:langvider/src/ui/utils/provider_utils.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +31,21 @@ class AppProvider extends MultiProvider {
               create: (context) => DictionaryInteractor(
                 DictionaryRepository(),
                 ProviderUtils.provide<AuthInteractor>(context),
+              ),
+            ),
+            Provider<NotificationInteractor>(
+              create: (_) => NotificationInteractor(),
+            ),
+            Provider<TrainingInteractor>(
+              create: (context) => TrainingInteractor(
+                ProviderUtils.provide<DictionaryInteractor>(context),
+              ),
+            ),
+            Provider<LearningInteractor>(
+              create: (context) => LearningInteractor(
+                ProviderUtils.provide<DictionaryInteractor>(context),
+                ProviderUtils.provide<NotificationInteractor>(context),
+                ProviderUtils.provide<TrainingInteractor>(context),
               ),
             ),
           ],

@@ -1,10 +1,10 @@
+import 'package:langvider/src/domain/training_type.dart';
 import 'package:langvider/src/domain/word.dart';
 import 'package:langvider/src/interactor/dictionary/dictionary_interactor.dart';
 import 'package:langvider/src/ui/base/screen/base_widget_model.dart';
 import 'package:langvider/src/ui/base/state_management/state/action.dart';
 import 'package:langvider/src/ui/base/state_management/state/loading_state_stream.dart';
 import 'package:langvider/src/ui/screen/trainings/selecting/selecting_training_screen_route.dart';
-import 'package:langvider/src/ui/screen/trainings/training_screen_type.dart';
 import 'package:langvider/src/ui/screen/trainings/writing/writing_training_screen_route.dart';
 
 const minWordCountForTrainings = 2;
@@ -23,8 +23,8 @@ class TrainingsScreenWm extends BaseWidgetModel {
     LoadingState.loading(),
   );
 
-  final openSelectingTrainingAction = Action<TrainingScreenType>();
-  final openWritingTrainingAction = Action<TrainingScreenType>();
+  final openSelectingTrainingAction = Action<TrainingType>();
+  final openWritingTrainingAction = Action<TrainingType>();
   final reloadData = Action();
 
   @override
@@ -34,12 +34,12 @@ class TrainingsScreenWm extends BaseWidgetModel {
     listen(reloadData, (_) => _checkTrainingEnable());
   }
 
-  void _openSelectingTrainingScreen(TrainingScreenType screenType) {
-    navigator.push(SelectingTrainingScreenRoute(screenType));
+  void _openSelectingTrainingScreen(TrainingType trainingType) {
+    navigator.push(SelectingTrainingScreenRoute(trainingType));
   }
 
-  void _openWritingTrainingScreen(TrainingScreenType screenType) {
-    navigator.push(WritingTrainingScreenRoute(screenType));
+  void _openWritingTrainingScreen(TrainingType trainingType) {
+    navigator.push(WritingTrainingScreenRoute(trainingType));
   }
 
   Future<void> _checkTrainingEnable() async {
