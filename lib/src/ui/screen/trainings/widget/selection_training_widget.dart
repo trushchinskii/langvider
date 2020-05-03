@@ -46,11 +46,13 @@ class SelectionTrainingWidget extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildAnswer(
-                  type: data.trainingType,
-                  answer: data.data.answers[1],
-                  isAnswerCorrect: data.isAnswerCorrect,
-                ),
+                child: data.data.answers.length > 1
+                    ? _buildAnswer(
+                        type: data.trainingType,
+                        answer: data.data.answers[1],
+                        isAnswerCorrect: data.isAnswerCorrect,
+                      )
+                    : const SizedBox.shrink(),
               ),
               const SizedBox(width: 16),
             ],
@@ -94,7 +96,6 @@ class SelectionTrainingWidget extends StatelessWidget {
           type == TrainingType.selectTextTranslation
               ? answer.translation
               : answer.text,
-          style: h5,
         ),
         onPressed: () => onAnswerTap(answer),
       );

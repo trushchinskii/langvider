@@ -126,7 +126,7 @@ class TrainingInteractor {
       for (int i = 1; i < answerCount; i++) {
         answers.add(_getRandomWord(answers, allWords));
       }
-
+      answers.shuffle(_random);
       result.add(answers);
     }
 
